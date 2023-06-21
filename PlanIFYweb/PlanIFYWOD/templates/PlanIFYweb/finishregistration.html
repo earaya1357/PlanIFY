@@ -1,0 +1,44 @@
+
+
+{% block content %}
+
+<h3>Finish Registration</h3>
+{% for msg in messages %}
+<p>{{msg}}</p>
+{% endfor %}
+<div>
+    <h3>Welcome {{username}}</h3>
+    <form method="post" action="">
+        {% csrf_token %}
+        First Name: {{form.first_name_user}}<br>
+        Last Name: {{form.last_name_user}}<br>
+        Age: {{form.age_user}}<br>
+        Email: {{form.email_user}}<br>
+        Phone Number: {{form.phone_number_user}}<br>
+        Address: {{form.address_user}}<br>
+        City: {{form.city_user}}<br>
+        Zip Code: {{form.zip_code_user}}<br>
+        <div class="">
+            <h3>Host/Athlete</h3>
+            <h4>Would you like to host events, be an athlete in events or both?</h4>
+            Host: {{form.host_user}}<br>
+            Athlete: {{form.athlete_user}}<br>
+        </div>
+        <div class="bio-profile">
+            <h3>Bio and profile picture</h3>
+            <h4>Its not needed now, but a bio and picture can say a lot about you</h4>
+            Bio: {{form.user_bio}}<br>
+        </div>
+        <br>
+        <input type="submit" title="Submit" class="submit-btn">
+    </form>
+</div>
+
+
+
+
+<h3>Already a member?<a href="{% url 'SignIn' %}" class="ml-2">Sign In</a></h3>
+
+
+{% endblock %}
+

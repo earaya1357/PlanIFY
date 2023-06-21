@@ -1,0 +1,22 @@
+
+
+{% block content %}
+
+<h3>Register</h3>
+<form method="post" action="">
+    {% csrf_token %}
+        {% for i in form %}
+            {{i.label}}: {{i}}<br>
+        {% endfor %}
+    <input type="submit" title="Submit">
+</form>
+
+{% for msg in messages %}
+    <p>{{msg}}</p>
+{% endfor %}
+
+<h2>Already a member?<a href="{% url 'SignIn' %}" class="ml-2">Sign In</a></h2>
+
+
+{% endblock %}
+

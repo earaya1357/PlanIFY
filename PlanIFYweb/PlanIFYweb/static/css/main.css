@@ -1,0 +1,99 @@
+div.header-container{
+    background-color: rgba(0, 153, 255, 0.705);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    }
+div.nav-bar{
+    background-color: rgb(0, 174, 255);;
+    padding: 14px 16px;
+}
+a.navlink{
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: Arial;
+
+}
+a.navlink:hover{
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: rgb(47, 95, 255);
+    font-family: Arial;
+}
+a.logout-btn{
+    background-color: rgba(255, 0, 0, 0.788);
+    left: 0;
+}
+a.logout-btn:hover{
+    background-color: rgb(255, 0, 0);
+    left: 0;
+}
+.option-div{
+    background-color: green;
+}
+.new-event-div{
+    width: 150px;
+    height: 100px;
+    border-radius: 10px;
+    border: 2px solid rgb(25, 223, 75);
+    background-color: rgb(47, 255, 106);
+    text-align: center;
+
+    margin-top: 1%;
+    margin-left: 1%;
+}
+.new-event-div:hover{
+    background-color: rgb(47, 238, 26);
+}
+.new-event-div-outter{
+    width: 150;
+    height: 150;
+    
+}
+.modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 700;
+    height: 400;
+    background-color: white;
+    transform: translate(-50%, -50%);
+}
+.modal-body{
+
+    padding: 10px 15px;
+}
+.overlay{
+    position: fixed;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    
+}
+
+.overlay.active{
+    opacity: 0;
+    pointer-events: all;
+}
+.event-name{
+    text-align: center;
+}
+.modal-btn{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 150px;
+}
+.event-table{
+    border: 1px solid;
+}
+td {
+    border: 1px solid;
+}

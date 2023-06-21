@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    </head>
+    
+        <div class="nav-bar">
+            <a href="" class="navlink">{{ user }}</a>
+            <a href="{% url 'Home' %}" class="navlink">Home</a>
+            <a href="{% url 'SignOut' %}" class="logout-btn" class="navlink">Logout</a>
+        </div>
+        <header>
+            <div class="header-container">
+                <center><h3>{{pagename}}</h3></center>
+        </div>
+        
+        </header>
+    {% block content %}
+
+    {% endblock%}
+    <footer>
+        
+    </footer>
+</html>

@@ -1,0 +1,44 @@
+{% extends 'PlanIFYweb/navbar.html' %}
+
+{% block content %}
+<body>
+
+    <div class="new-event-div-outter">
+        <div class="new-event-div" title="Start a new event">
+            <a href="{% url 'NewEvent' %}">Plan An New Event</a>
+            
+        </div>
+    </div>
+    <table class="event-table">
+        <tr>
+            <th>Event Name</th>
+            <th>Event Date</th>
+            <th>Type</th>
+        </tr>
+        {% for event in hostevents %}
+        <tr>
+            <td>{{event.event_name}}</td>
+            <td>{{event.event_date}}</td>
+            <td>{{event.event_type}}</td>
+        </tr>
+            
+        {% endfor %}
+    </table>
+
+
+   
+</body>
+
+{% endblock %}
+
+<div class="overlay">
+    <div class="modal">
+        <div class="modal-body">
+            <h3 class="event-name">Event Name</h3>
+            <input type="text"><br>
+            <button class="modal-btn">Save</button><br>
+            
+        </div>
+
+    </div>
+</div>
