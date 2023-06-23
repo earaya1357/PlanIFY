@@ -3,12 +3,13 @@
 {% block content %}
 <body>
 
-    <div class="new-event-div-outter">
+    <div class="new-event-div-outter" id="outer-div">
         <div class="new-event-div" title="Start a new event">
             <a href="{% url 'NewEvent' %}">Plan An New Event</a>
             
         </div>
     </div>
+
     <table class="event-table">
         <tr>
             <th>Event Name</th>
@@ -25,25 +26,39 @@
         {% endfor %}
     </table>
 
+    <dialog id="dia">
+        <form>
+            <h4>Event Name:</h4><br>
+            <input type="text" id="event-name"><br>
+            <input type="submit" title="Create" id="save"><br>
+        </form>
+        <button name="Close" id="close-btn">[X]/button>
+    </dialog>
 
    
 </body>
 
 <script>
-    const newevent = document.getElementsByClassName("new-event-div")
-    function DialogMsg(){
-    <dialog open>
-        <p>Greetings, one and all!</p>
-        <form method="dialog">
-          <button>OK</button>
-        </form>
-    </dialog>
-    }
-    newevent.addEventlistener("click", console.log("something happened"));
+    const newevent = document.getElementById("outer-div");
+    const modal = document.getElementById("dia");
+    const closebtn = document.getElementById("close-btn");
+    const submitbtn = document.getElementById("save");
+    const eventname = document.getElementById("event-name").value;
 
+    newevent.addEventListener('click', ()=>{
+        modal.showModal();
+    })
 
+    closebtn.addEventListener('click', ()=>{
+        modal.close();
+    })
 
-//</script>
+    submitbtn.addEventListener('click', ()=>{
+        document.write(eventname)
+        console.log(eventname)
+    })
+
+</script>
 {% endblock %}
 
 
