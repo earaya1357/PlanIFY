@@ -29,16 +29,22 @@
    
 </body>
 
+<script>
+    const newevent = document.getElementsByClassName("new-event-div")
+    function DialogMsg(){
+    <dialog open>
+        <p>Greetings, one and all!</p>
+        <form method="dialog">
+          <button>OK</button>
+        </form>
+    </dialog>
+    }
+    newevent.addEventlistener("click", console.log("something happened"));
+
+
+
+//</script>
 {% endblock %}
 
-<div class="overlay">
-    <div class="modal">
-        <div class="modal-body">
-            <h3 class="event-name">Event Name</h3>
-            <input type="text"><br>
-            <button class="modal-btn">Save</button><br>
-            
-        </div>
 
-    </div>
-</div>
+
