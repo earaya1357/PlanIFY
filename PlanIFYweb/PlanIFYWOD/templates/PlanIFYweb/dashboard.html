@@ -27,9 +27,10 @@
     </table>
 
     <dialog id="dia">
-        <form>
+        <form action="" method="post" name="form">
+            {% csrf_token %}
             <h4>Event Name:</h4><br>
-            <input type="text" id="event-name"><br>
+            {{ form }}<br>
             <input type="submit" title="Create" id="save"><br>
         </form>
         <button name="Close" id="close-btn">[X]/button>
@@ -43,7 +44,6 @@
     const modal = document.getElementById("dia");
     const closebtn = document.getElementById("close-btn");
     const submitbtn = document.getElementById("save");
-    const eventname = document.getElementById("event-name").value;
 
     newevent.addEventListener('click', ()=>{
         modal.showModal();

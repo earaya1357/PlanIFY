@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import EventForm, CreateUserForm, UserAccountForm
+from .forms import EventForm, CreateUserForm, UserAccountForm, EventName
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -12,7 +12,14 @@ from django.contrib.auth.models import User
 def home(request):
     usern = UserAccount.objects.filter(username=request.user).values()
     events = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values()
-    return render(request, 'PlanIFYweb/dashboard.html', {'pagename':'Home', 'hostevents': events})
+    form = EventName()
+    if request.method == 'POST':
+        form = EventName(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print(data)
+
+    return render(request, 'PlanIFYweb/dashboard.html', {'pagename':'Home', 'hostevents': events, 'form':form})
 
 
 @login_required(login_url='SignIn')
