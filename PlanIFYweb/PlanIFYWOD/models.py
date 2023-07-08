@@ -129,9 +129,13 @@ class Event(models.Model):
     event_size = models.CharField(max_length=10, choices=SIZE, default='50-100', null=False)
     event_location = models.CharField(max_length=100)
     event_address = models.CharField(max_length=100)
+    event_country = models.CharField(max_length=50, null=True)
+    event_state = models.CharField(max_length=30, null=True)
     event_phone_number = models.CharField(max_length=20)
-    event_description = models.TextField(max_length=512)
+    event_description = models.TextField(max_length=100, null=True, blank=True)
+    event_long_description = models.TextField(max_length=512, null=True, blank=True)
     event_tshirts = models.BooleanField(default=False)
+    event_tshirts_price = models.FloatField(null=True, blank=True, default=0.00)
     event_type = models.TextField(max_length=20, choices=EVENT_TYPE, default='Individual',null=False)
     event_registration_date_open = models.DateTimeField(null=True, blank=True)
     event_registration_date_close = models.DateTimeField(null=True, blank=True)
@@ -141,6 +145,7 @@ class Event(models.Model):
     event_waiver = models.BooleanField(default=False)
     event_waiver_document = models.FileField(null=True, blank=True)
     event_prizes = models.BooleanField(default=False)
+    event_banner = models.ImageField(upload_to='images/', default='generic_workout.jpeg')
     event_vendors = models.BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -181,3 +186,10 @@ class EventHelp(models.Model):
     first_name = models.CharField(max_length=50, null=False, blank=False)
     last_name = models.CharField(max_length=50, null=False, blank=False)
     role = models.CharField(max_length=50, choices=ROLE_OPTIONS, null=False, blank=False)
+
+
+class EventPrizes(models.Model):
+    id = models.AutoField(unique=True, primary_key=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE) 
+    position = models.CharField(max_length=30)
+    prize_amount = models.FloatField(default=0.00) 

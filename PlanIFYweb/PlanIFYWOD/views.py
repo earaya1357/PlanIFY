@@ -187,7 +187,10 @@ def prepareevent(request, event):
     return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
 
 
+def generalevent(request, event):
+    pass
 
 
 
-
+def homepage(request):
+    return render(request, 'PlanIFYweb/home.html')
