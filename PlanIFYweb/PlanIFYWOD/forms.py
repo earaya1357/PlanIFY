@@ -4,16 +4,45 @@ from .models import UserAccount, Event, EventParticipant, EventWorkOut, EventVen
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+class DateIn(forms.DateInput):
+    input_type = 'datetime-local'
+
+
+
+class EventWorkoutForm(ModelForm):
+    class Meta:
+        model = EventWorkOut
+        fields = '__all__'
+
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['event_host_user', 'event_host_affiliate', 'event_name', 'event_date', 'event_size', 'event_location', 'event_address', 'event_phone_number', 'event_description']
+        fields = '__all__'
+        widgets = {
+            'event_date': DateIn(),
+            'event_date_created': DateIn(),
+            'event_registration_date_open': DateIn(),
+            'event_registration_date_close': DateIn(),
+        }
+
+class FullEventForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = '__all__'
+        widgets = {
+            'event_date': DateIn(),
+            'event_date_created': DateIn(),
+            'event_registration_date_open': DateIn(),
+            'event_registration_date_close': DateIn(),
+
+        }
 
 
 class UserAccountForm(ModelForm):
     class Meta:
         model = UserAccount
         fields = '__all__'
+
 
 
 class CreateUserForm(UserCreationForm):
@@ -30,4 +59,8 @@ class EventParticipantForm(ModelForm):
 
 class EventName(forms.Form):
     name = forms.CharField(max_length=50)
+
+
+class AffiliateSearch(forms.Form):
+    affiliate_name = forms.CharField(max_length=50)
 

@@ -11,13 +11,13 @@
             <a href="" class="navlink">{{ user }}</a>
             <a href="{% url 'Home' %}" class="navlink">Home</a>
             <a href="{% url 'SignOut' %}" class="logout-btn" class="navlink">Logout</a>
+            <header>
+                <div class="header-container">
+                    <center><h3>{{pagename}}</h3></center>
+            </div>
+            </header>
         </div>
-        <header>
-            <div class="header-container">
-                <center><h3>{{pagename}}</h3></center>
-        </div>
-        
-        </header>
+
     {% block content %}
 
     {% endblock%}

@@ -1,0 +1,70 @@
+{% extends 'PlanIFYweb/navbar.html' %}
+
+{% block content %}
+<body>
+    <div class="filler">
+        <h1 class="filler-text">filler</h1>
+    </div>
+    <div class="event-input-form">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            
+            <input type="submit" >
+        </form>
+        <br>
+
+    </div>
+    <button>
+        <a href="{% url 'PrepareEvent' event=pagename %}">Prepare Event</a>
+    </button>
+
+    <br>
+    <div class="add-workout-form">
+        <button id="add-workouts" class="add-workouts">Add Workouts</button>
+        <table class="workout-table">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Workout Type</th>
+                <th>Time</th>
+                <th>Floater</th>
+            </tr>
+            {% for workout in workout_list %}
+            <tr>
+                <td>{{workout.workout_name}}</td>
+                <td>{{workout.workout_description}}</td>
+                <td>{{workout.workout_type}}</td>
+                <td>{{workout.workout_time}}</td>
+                <td>{{workout.floater}}</td>
+                <td><button class="update-btn">UPDATE</button></td>
+                <td><button class="delete-btn">DELETE</button></td>
+            </tr>
+                
+            {% endfor %}
+        </table>
+    </div>
+    
+
+
+
+    <dialog class="workout-dialog" id="workout-dialog">
+        <form action="" method="post">
+            <h3>Select the workout Type:</h3>
+            {% csrf_token %}
+            {{ form2.as_p }}
+            <input type="submit">            
+        </form>
+        
+    </dialog>
+</body>
+<script>
+    const addbtn = document.getElementById("add-workouts")
+    const workoutdialog = document.getElementById("workout-dialog")
+
+    addbtn.addEventListener('click', ()=>{
+        workoutdialog.showModal()
+    })
+</script>
+
+{% endblock %}

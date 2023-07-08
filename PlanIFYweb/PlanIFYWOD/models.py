@@ -40,7 +40,11 @@ GENDERS = [
     ('Female', 'Female')
 ]
 
-
+ROLE_OPTIONS = [
+    ('Judge', 'Judge'),
+    ('MC', 'MC'),
+    ('General', 'General')
+]
 
 
 class UserAccount(models.Model):
@@ -58,8 +62,11 @@ class UserAccount(models.Model):
     city_user = models.CharField(max_length=100, blank=True)
     zip_code_user = models.CharField(max_length=100, blank=True)
     host_user = models.BooleanField(null=True, blank=True)
+    host_user_approved = models.BooleanField(null=True, blank=True, default=False)
     athlete_user = models.BooleanField(null=True, blank=True)
+    athlete_user_approved = models.BooleanField(null=True, blank=True, default=False)
     vendor_user = models.BooleanField(null=True, blank=True)
+    vendor_user_approved = models.BooleanField(null=True, blank=True, default=False)
     user_bio = models.TextField(null=True, max_length=250, blank=True)
     user_picture = models.ImageField(null=True, blank=True)
 
@@ -71,6 +78,7 @@ class UserAccount(models.Model):
 class Affiliate(models.Model):
     affiliate_id_number = models.AutoField(primary_key=True, unique=True)
     name_affiliate = models.CharField(max_length=50, null=False)
+    affiliate_approved = models.BooleanField(null=True, blank=True, default=False)
     status_affiliate = models.CharField(max_length=20, choices=STATUS, default='ACTIVE', null=False)
     date_joined_affiliate = models.DateField(null=False, auto_now_add=True)
     email_affiliate = models.EmailField(max_length=75)
@@ -88,6 +96,8 @@ class Affiliate(models.Model):
 class Vendor(models.Model):
     id = models.AutoField(primary_key=True)
     name_vendor = models.CharField(max_length=100)
+    vendor_approved = models.BooleanField(null=True, blank=True, default=False)
+    vendor_status = models.CharField(max_length=25, choices=STATUS, default='ACTIVE')
     description_vendor = models.TextField(max_length=500)
     email_vendor = models.EmailField(max_length=75, blank=True)
     phone_number_vendor = models.CharField(max_length=20, blank=True)
@@ -95,7 +105,6 @@ class Vendor(models.Model):
     city_vendor = models.CharField(max_length=100, blank=True)
     zip_code_vendor = models.CharField(max_length=100, blank=True)
     webiste_vendor = models.URLField(blank=True)
-
 
 
 class AffiliateMember(models.Model):
@@ -116,7 +125,7 @@ class Event(models.Model):
     event_status = models.CharField(max_length=25, choices=EVENT_STATUS, default='ACTIVE',null=False)
     event_name = models.CharField(max_length=100, unique=True)
     event_date_created = models.DateField(null=False, auto_now=True)
-    event_date = models.DateField(null=False)
+    event_date = models.DateTimeField(null=False)
     event_size = models.CharField(max_length=10, choices=SIZE, default='50-100', null=False)
     event_location = models.CharField(max_length=100)
     event_address = models.CharField(max_length=100)
@@ -124,8 +133,8 @@ class Event(models.Model):
     event_description = models.TextField(max_length=512)
     event_tshirts = models.BooleanField(default=False)
     event_type = models.TextField(max_length=20, choices=EVENT_TYPE, default='Individual',null=False)
-    event_registration_date_open = models.DateField(null=True)
-    event_registration_date_close = models.DateField(null=True)
+    event_registration_date_open = models.DateTimeField(null=True, blank=True)
+    event_registration_date_close = models.DateTimeField(null=True, blank=True)
     event_price_athlete = models.FloatField(default=0.00)
     event_price_general = models.FloatField(default=0.00)
     event_promo_code = models.BooleanField(default=False)
@@ -152,13 +161,23 @@ class EventParticipant(models.Model):
 class EventWorkOut(models.Model):
     id = models.AutoField(unique=True, primary_key=True)
     event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.CASCADE)
+    workout_name = models.CharField(max_length=50, blank=True)
     workout_type = models.CharField(max_length=50, choices=WORKOUT_TYPES)
     workout_description = models.TextField(max_length=250, blank=True, null=True)
-    workout_time = models.TimeField(null=True, blank=True)
+    workout_time = models.FloatField(null=True, blank=True)
     workout_floater = models.BooleanField(default=False)
+    workout_demo = models.FileField(null=True, blank=True)
     
 
 class EventVendor(models.Model):
     id = models.AutoField(unique=True, primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+
+
+class EventHelp(models.Model):
+    id = models.AutoField(unique=True, primary_key=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50, null=False, blank=False)
+    last_name = models.CharField(max_length=50, null=False, blank=False)
+    role = models.CharField(max_length=50, choices=ROLE_OPTIONS, null=False, blank=False)

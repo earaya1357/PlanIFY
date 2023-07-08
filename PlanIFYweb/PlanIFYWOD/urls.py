@@ -4,9 +4,11 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='Home'),
-    path('new-event', views.createnewevent, name='NewEvent'),
+    path('eventdesign/<str:eventname>', views.eventdesign, name='EventDesign'),
     path('register', views.register, name='Register'),
     path('sign-in', views.usersignin, name='SignIn'),
     path('sign-out', views.usersignout, name='SignOut'),
     path('complete-registration/<str:username>', views.completeregistration, name='CompleteRegistration'),
+    path('your-events/<int:id>', views.hostedevents, name='HostedEvent'),
+    path('event/prepare/<str:event>', views.prepareevent, name='PrepareEvent'),
 ]

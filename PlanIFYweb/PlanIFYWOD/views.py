@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import UserAccount, Event, EventWorkOut
+from .models import UserAccount, Event, EventWorkOut, EventHelp, EventParticipant
 from django.contrib.auth.models import User
 
 
@@ -172,3 +172,22 @@ def hostedevents(request, id):
 
 
     return render(request, 'PlanIFYweb/hostevent.html', {'pagename': event, 'form': form, 'form2': form2, 'workout_list': workouts})
+
+
+
+@login_required(login_url='SignIn')
+def prepareevent(request, event):
+    usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']
+    event = Event.objects.get(event_name=event)
+    workoutlist = EventWorkOut.objects.filter(event=event)
+    help = EventHelp.objects.filter(event=event)
+    athletes = EventParticipant.objects.filter(event_id_number=event)
+    print(help)
+
+    return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
+
+
+
+
+
+

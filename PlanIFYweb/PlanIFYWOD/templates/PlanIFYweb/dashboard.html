@@ -1,47 +1,129 @@
 {% extends 'PlanIFYweb/navbar.html' %}
-
+{% load static %}
 {% block content %}
 <body>
-
-    <div class="new-event-div-outter" id="outer-div">
-        <div class="new-event-div" title="Start a new event">
-            <a href="{% url 'NewEvent' %}">Plan An New Event</a>
-            
-        </div>
+    <div class="filler">
+        <h1 class="filler-text">filler</h1>
     </div>
 
-    <table class="event-table">
-        <tr>
-            <th>Event Name</th>
-            <th>Event Date</th>
-            <th>Type</th>
-        </tr>
-        {% for event in hostevents %}
-        <tr>
-            <td>{{event.event_name}}</td>
-            <td>{{event.event_date}}</td>
-            <td>{{event.event_type}}</td>
-        </tr>
-            
-        {% endfor %}
-    </table>
+    <div class="action-button-list">
+        <button type="button" id="new-event-button" class="new-event-button" role="button">
+            Create a New Event
+        </button>
 
-    <dialog id="dia">
-        <form action="" method="post" name="form">
-            {% csrf_token %}
-            <h4>Event Name:</h4><br>
-            {{ form }}<br>
-            <input type="submit" title="Create" id="save"><br>
-        </form>
-        <button name="Close" id="close-btn">[X]/button>
-    </dialog>
+        <button type="button" id="new-affiliate-button" class="new-event-button" role="button">
+            Create a New Affiliate
+        </button>
+
+        <button type="button" id="join-affiliate-button" class="new-event-button" role="button">
+            Join an Affiliate
+        </button>
+    </div>
+
+
+    <div class="event-lists">
+        <!-- Current Events participating -->
+        {% if athleteevents %}
+            <div class="athlete-list">
+                <div>
+                    <h3>Your Upcoming Events</h3>
+                    {% for event in athleteevents %}
+                    <div class="event-div">
+                        <img src="{% static '/images/generic_workout.jpeg' %}"/>
+                        <div class="event-info-div">
+                            <div>
+                                <h2>{{event.event_name}} : {{event.event_date}}</h2>
+                                <p>{{event.event_description}}</p>
+                            </div>
+                            <img src="{% static '/images/generic_avatar.png'  %}" class="event-host" />
+                        </div>
+                        <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <!-- Current Hosting Events participating -->
+        {% if hostevents %}
+            <div class="host-list">
+                <div>
+                    <h3>Your Upcoming Hosted Events</h3>
+                    {% for event in hostevents %}
+                    <div class="event-div">
+                        <img src="{% static '/images/generic_workout.jpeg' %}"/>
+                        <div class="event-info-div">
+                            <div>
+                                <h2>{{event.event_name}} : {{event.event_date}}</h2>
+                                <p>{{event.event_description}}</p>
+                            </div>
+                            <h2 class="event-price">{{event.event_price_athlete}}</h2>
+                            <img src="{% static '/images/generic_avatar.png'  %}" class="event-host" />
+                        </div>
+                        <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                    </div>
+                    {% endfor %}
+                </div>
+        {% endif %}    
+
+        </div>
+
+
+        <!-- Current Events Vending -->
+        {% if vendorevents %}
+            <div class="host-list">
+                
+                <h3>Your Upcoming Catering Events</h3>
+                {% for event in vendorevents %}
+                <div class="event-div">
+                    <img src="{% static '/images/generic_workout.jpeg' %}"/>
+                    <div class="event-info-div">
+                        <div>
+                            <h2>{{event.event_name}} : {{event.event_date}}</h2>
+                            <p>{{event.event_description}}</p>
+                        </div>
+                        <h2 class="event-price">{{event.event_size}}</h2>
+                        <img src="{% static '/images/generic_avatar.png'  %}" class="event-host" />
+                    </div>
+                    <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <!-- Dialog for creating a new event-->
+        <dialog id="new-event-dialog" class="new-event-dialog">
+            
+            <form action="" method="post" name="form1" class="event-name-form">
+                {% csrf_token %}
+                <h4>Event Name:</h4>
+                {{ form1.name }}<br><br>
+                <input type="submit" title="Create" id="save" class="save">
+                <button name="Close" id="close-btn" class="close-btn">Cancel</button>
+            </form>
+            
+        </dialog>
+
+        <dialog id="join-affiliate-dialog" class="join-affiliate-dialog">
+            
+            <form action="" method="post" name="form2" class="join-affiliate-form">
+                {% csrf_token %}
+                <h4>Search for an affiliate name:</h4>
+                {{ form2.affiliate_name }}<br><br>
+                <input type="submit" title="search" id="search" class="search">
+                <button name="Close" id="close-btn-2" class="close-btn-2">Cancel</button>
+            </form>
+            
+        </dialog>
+
+
 
    
 </body>
 
 <script>
-    const newevent = document.getElementById("outer-div");
-    const modal = document.getElementById("dia");
+    //Actions for the new event dialog
+    const newevent = document.getElementById("new-event-button");
+    const modal = document.getElementById("new-event-dialog");
     const closebtn = document.getElementById("close-btn");
     const submitbtn = document.getElementById("save");
 
@@ -58,6 +140,24 @@
         console.log(eventname)
     })
 
+    //Actions for searching for an affiliate
+    const joinaffiliate = document.getElementById("join-affiliate-button");
+    const modal2 = document.getElementById("join-affiliate-dialog");
+    const closebtn2 = document.getElementById("close-btn-2");
+    const searchbtn = document.getElementById("search");
+
+    joinaffiliate.addEventListener('click', ()=>{
+        modal2.showModal();
+    })
+
+    closebtn2.addEventListener('click', ()=>{
+        modal2.close();
+    })
+
+    searchbtn.addEventListener('click', ()=>{
+        document.write(eventname)
+        console.log(eventname)
+    })
 </script>
 {% endblock %}
 

@@ -1,0 +1,70 @@
+{% extends 'PlanIFYweb/navbar.html' %}
+
+{% block content %}
+<body>
+    <div class="filler">
+        <h1 class="filler-text">filler</h1>
+    </div>
+    <h2>Event Preparation</h2>
+    <div>
+        <p>
+            Let's get prepared for the big event! 
+            Here are a few helpful reminders before getting started.
+            <ul>
+                <li>Temperature for the day</li>
+                <li>Stop watches</li>
+                <li>Parking</li>
+                <li>Food and drinks</li>
+                <li>Intermission time and entertainment</li>
+                <li>Speeches</li>
+                <li>Assistant coordinators</li>
+                <li>Station location(s) and setup</li>
+
+            </ul>
+        </p>
+    </div>
+    <div>
+        <h2>Workout List</h2>
+        <button>Print Workouts</button>
+        <button>Print Judge Forms</button>
+        <ol>
+            {% for workout in workoutlist %}
+            <li> {{workout.workout_name}} - {{workout.type}} - {{workout.workout_time}} - {{workout.floater}}</li>
+            {% endfor %}
+        </ol>
+        
+    </div>
+    <div>
+        <h2>Participants</h2>
+        {% if athletes %}
+        <ol>
+            {% for athlete in athletes %}
+            <li> {{athlete.first_name}} {{athlete.last_name}}</li>
+            {% endfor %}
+        </ol>
+    {% else %}
+    <h3>No registered participants yet.</h3>
+    {% endif%}
+    </div>
+    <div>
+        <h2>Judges and Help</h2>
+        {% if help %}
+            <ol>
+                {% for helpers in help %}
+                <li> {{helpers.first_name}} {{helpers.last_name}}</li>
+                {% endfor %}
+            </ol>
+        {% else %}
+        <h3>No registered help yet.</h3>
+        {% endif%}
+        
+    </div>
+    <div>
+        <h2>Facility layout and Stations</h2>
+    </div>
+</body>
+
+
+
+
+{% endblock %}
