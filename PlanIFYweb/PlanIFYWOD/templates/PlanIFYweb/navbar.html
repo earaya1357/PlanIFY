@@ -8,7 +8,7 @@
     </head>
     
         <div class="nav-bar">
-            <a href="" class="navlink">{{ user }}</a>
+            <a href="{% url 'Profile' user=user%}" class="navlink">{{ user }}</a>
             <a href="{% url 'Home' %}" class="navlink">Home</a>
             <a href="{% url 'SignOut' %}" class="logout-btn" class="navlink">Logout</a>
             <header>

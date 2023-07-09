@@ -28,14 +28,18 @@
                 <div>
                     <h3>Your Upcoming Events</h3>
                     {% for event in athleteevents %}
-                    <div class="event-div">
-                        <img src="{% static '/images/generic_workout.jpeg' %}"/>
+                    <div class="event-div"> 
+                        {% if event.event_banner %}
+                        <img src="{{event.event_banner}}"/>
+                        {% else %}
+                        <img src="{% static '/media/images/generic_workout.jpeg' %}"/>
+                        {% endif %}
                         <div class="event-info-div">
                             <div>
                                 <h2>{{event.event_name}} : {{event.event_date}}</h2>
                                 <p>{{event.event_description}}</p>
                             </div>
-                            <img src="{% static '/images/generic_avatar.png'  %}" class="event-host" />
+                            <img src="{% static '/media/images/generic_avatar.png'  %}" class="event-host" />
                         </div>
                         <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
                     </div>
@@ -50,14 +54,18 @@
                     <h3>Your Upcoming Hosted Events</h3>
                     {% for event in hostevents %}
                     <div class="event-div">
-                        <img src="{% static '/images/generic_workout.jpeg' %}"/>
+                        {% if event.event_banner %}
+                        <img src="{{event.event_banner}}"/>
+                        {% else %}
+                        <img src="{% static '/media/images/generic_workout.jpeg' %}"/>
+                        {% endif %}
                         <div class="event-info-div">
                             <div>
                                 <h2>{{event.event_name}} : {{event.event_date}}</h2>
                                 <p>{{event.event_description}}</p>
                             </div>
                             <h2 class="event-price">{{event.event_price_athlete}}</h2>
-                            <img src="{% static '/images/generic_avatar.png'  %}" class="event-host" />
+                            <img src="{% static '/media/images/generic_avatar.png'  %}" class="event-host" />
                         </div>
                         <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
                     </div>
@@ -75,14 +83,18 @@
                 <h3>Your Upcoming Catering Events</h3>
                 {% for event in vendorevents %}
                 <div class="event-div">
-                    <img src="{% static '/images/generic_workout.jpeg' %}"/>
+                    {% if event.event_banner %}
+                    <img src="{{event.event_banner}}"/>
+                    {% else %}
+                    <img src="{% static '/media/images/generic_workout.jpeg' %}"/>
+                    {% endif %}
                     <div class="event-info-div">
                         <div>
                             <h2>{{event.event_name}} : {{event.event_date}}</h2>
                             <p>{{event.event_description}}</p>
                         </div>
                         <h2 class="event-price">{{event.event_size}}</h2>
-                        <img src="{% static '/images/generic_avatar.png'  %}" class="event-host" />
+                        <img src="{% static '/media/images/generic_avatar.png'  %}" class="event-host" />
                     </div>
                     <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
                 </div>

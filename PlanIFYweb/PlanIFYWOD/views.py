@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import EventForm, CreateUserForm, UserAccountForm, EventName, AffiliateSearch, FullEventForm, EventWorkoutForm
+from .forms import EventForm, CreateUserForm, UserAccountForm, EventName, AffiliateSearch, FullEventForm, EventWorkoutForm, UserProfileForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -85,6 +85,14 @@ def checkstatus(request):
     return athlete_approved, host_approved, vendor_approved
 
 
+#User profile page
+@login_required(login_url='SignIn')
+def userprofile(request, user):
+    usern = UserAccount.objects.filter(username=request.user).values()
+    profile = UserProfileForm(instance=user)
+
+    return render(request, 'PlanIFYweb/profile.html', {'profile': profile})
+
 #Home page for users
 @login_required(login_url='SignIn')
 def home(request):
@@ -137,7 +145,7 @@ def eventdesign(request, eventname):
     form = EventForm(initial={'event_host_user': usern,'event_name': eventname})
 
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form = EventForm(request.POST, request.FILES)
 
         if form.is_valid():
             
@@ -159,22 +167,27 @@ def hostedevents(request, id):
     workouts = EventWorkOut.objects.filter(event=id)
 
     if request.method == 'POST':
-        if 'workout_name' in request.POST:
-            form2 = EventWorkoutForm(request.POST)
-            if form2.is_valid():
-                form2.save()
-  
-        elif 'event_id' in request.POST:    
-            form = FullEventForm(request.POST, instance=event)
-            if form.is_valid():
-                form.save()
-                return redirect('Home')
+        try:
+            if request.POST.get('workout_name'):
+                form2 = EventWorkoutForm(request.POST, request.FILES)
+                if form2.is_valid():
+                    form2.save()
+                    
+    
+            elif request.POST.get('event_name'):
+                form = FullEventForm(request.POST, request.FILES, instance=event)
+                if form.is_valid():
+                    form.save()
+                    
+        except Exception as e:
+            print(e)
+
 
 
     return render(request, 'PlanIFYweb/hostevent.html', {'pagename': event, 'form': form, 'form2': form2, 'workout_list': workouts})
 
 
-
+#Page to allow host users to get prepared for an event 
 @login_required(login_url='SignIn')
 def prepareevent(request, event):
     usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']
@@ -186,11 +199,11 @@ def prepareevent(request, event):
 
     return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
 
-
+#General serach page for events. 
 def generalevent(request, event):
     pass
 
 
-
+#Landing page for all visitors.
 def homepage(request):
     return render(request, 'PlanIFYweb/home.html')

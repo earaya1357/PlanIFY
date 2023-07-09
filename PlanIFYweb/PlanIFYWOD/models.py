@@ -68,7 +68,7 @@ class UserAccount(models.Model):
     vendor_user = models.BooleanField(null=True, blank=True)
     vendor_user_approved = models.BooleanField(null=True, blank=True, default=False)
     user_bio = models.TextField(null=True, max_length=250, blank=True)
-    user_picture = models.ImageField(null=True, blank=True)
+    user_picture = models.ImageField(upload_to='media/profile_img',null=True, blank=True)
 
 
     def __str__(self) -> str:
@@ -125,7 +125,8 @@ class Event(models.Model):
     event_status = models.CharField(max_length=25, choices=EVENT_STATUS, default='ACTIVE',null=False)
     event_name = models.CharField(max_length=100, unique=True)
     event_date_created = models.DateField(null=False, auto_now=True)
-    event_date = models.DateTimeField(null=False)
+    event_date = models.DateField(null=False)
+    event_start_time = models.TimeField(null=True, blank=True)
     event_size = models.CharField(max_length=10, choices=SIZE, default='50-100', null=False)
     event_location = models.CharField(max_length=100)
     event_address = models.CharField(max_length=100)
@@ -137,15 +138,15 @@ class Event(models.Model):
     event_tshirts = models.BooleanField(default=False)
     event_tshirts_price = models.FloatField(null=True, blank=True, default=0.00)
     event_type = models.TextField(max_length=20, choices=EVENT_TYPE, default='Individual',null=False)
-    event_registration_date_open = models.DateTimeField(null=True, blank=True)
-    event_registration_date_close = models.DateTimeField(null=True, blank=True)
+    event_registration_date_open = models.DateField(null=True, blank=True)
+    event_registration_date_close = models.DateField(null=True, blank=True)
     event_price_athlete = models.FloatField(default=0.00)
     event_price_general = models.FloatField(default=0.00)
     event_promo_code = models.BooleanField(default=False)
     event_waiver = models.BooleanField(default=False)
     event_waiver_document = models.FileField(null=True, blank=True)
     event_prizes = models.BooleanField(default=False)
-    event_banner = models.ImageField(upload_to='images/', default='generic_workout.jpeg')
+    event_banner = models.ImageField(upload_to='media/images', null=True, blank=True)
     event_vendors = models.BooleanField(default=False)
 
     def __str__(self) -> str:
