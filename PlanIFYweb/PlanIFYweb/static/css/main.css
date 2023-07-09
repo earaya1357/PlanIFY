@@ -15,22 +15,19 @@ div.nav-bar{
     
 }
 a.navlink{
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
+    position: relative;
+    left: 10px;
+    padding: 10px;
+    margin: 2px;
+    width: 100px;
+    border: 2px solid;
     text-decoration: none;
     font-family: Arial;
+    font-size: 24;
 
 }
 a.navlink:hover{
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    background-color: rgb(47, 95, 255);
-    font-family: Arial;
+    background-color: lightblue;
 }
 a.logout-btn{
     background-color: rgba(255, 0, 0, 0.788);
@@ -189,3 +186,66 @@ padding-top: 2%;
     .event-input-form{
         columns: 5;
     }
+
+    /* Home page for PlanIFY*/
+
+
+.home-page-div{
+    padding-left: 50px;
+    background-color: rgb(60, 61, 61);
+}
+
+.top-bar-div{
+    position: relative;
+    background-color: rgb(60, 61, 61);
+    height: 75px;
+}
+.logo{
+    position: relative;
+    padding-left: 30%;
+    top: 25%;
+    height: 50px;
+    width: 200px;
+}
+.sign-up-btn, .sign-in-btn, .search-btn{
+    color: white;
+    position: relative;
+    left: 10px;
+    padding: 10px;
+    width: 100px;
+    border: 2px solid;
+    border-radius: 5px;
+    border-color: black;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    background-color: rgb(111, 103, 103);
+    font-family: Arial, Helvetica, sans-serif;
+}
+.search-btn{
+    margin-left: 46%;
+}
+.sign-up-btn:hover, .sign-in-btn:hover, .search-btn:hover{
+    background-color: rgb(0, 213, 0);
+}
+
+.intro-div{
+
+    margin-top: 0px;
+    background-color: rgb(60, 61, 61);
+}
+.section-title{
+    color: white;
+    text-align: center;
+}
+
+.search-div{
+    margin-bottom: 150px;
+    margin-left: 5px;
+    background-color: rgb(60, 61, 61);
+    
+}
+
+.home-page-body{
+    background-color: rgb(60, 61, 61);
+}

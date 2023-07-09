@@ -1,45 +1,58 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
-        <div>
-            <div>Sign Up</div>
-            <div>Sign In</div>
-        </div>
-    </head>
-    <body>
-        <div>
-            <h3>PlanIFY</h3>
-            <h4>Less setup more reps</h4>
-        </div>
+        <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 
-        <div>
-            <h3>Events</h3>
-            <div>
-                <div>Find an Event</div>
+    </head>
+    <body class="home-page-body">
+
+        <div class="home-page-div">
+            <div class="top-bar-div">
+                <a href="{% url 'Register' %}"><div class="sign-up-btn">Sign Up</div></a>
+                <a href="{% url 'SignIn' %}"><div class="sign-in-btn">Sign In</div></a>
+                <img src="{% static '/media/images/PlanIFY_LOGO.png' %}" class="logo">
+            </div>
+<!---
+            <div class="intro-div">
+                <h1 class="section-title">PlanIFY</h1>
+                <h4 style="color: white; text-align: center;">Less setup more reps</h4>
+            </div>
+--->
+    <hr>
+            <div class="search-div">
+                <h1 class="section-title">Events</h1>
+                <div>
+                    <div>
+                        <h4 style="color: white; margin-left: 5px; text-align: center;">Find an Event</h4>
+                        <a href=""><div class="search-btn">Search</div></a>
+                    </div>
+                </div>
+            </div>
+    
+    <hr>        
+            <div class="search-div">
+                <h1 class="section-title">What we are about</h1>
+                <p style="color: white; display: inline-block; margin-left: 5px;">PlanIFY helps to guide you through the process of event planning.
+                    We know the difficulty in coordinating an event and our mission is
+                    to simplify the event planning and coordinating process.
+                </p>
+            </div>
+
+    <hr>
+            <div class="search-div">
+                <h1 class="section-title">Features:</h1>
+                <ul style="color: white;">
+                    <li>Event Home Page Hosting</li>
+                    <li>Athlete Registration</li>
+                    <li>Judge Registration</li>
+                    <li>Event Scheduling</li>
+                    <li>Workout Planning</li>
+                    <li>Heat Planning</li>
+                    <li>Vendor Planning</li>
+                </ul>
             </div>
         </div>
-
-
-        <div>
-            <p>PlanIFY helps to guide you through the process of event planning.
-                We know the difficulty in coordinating an event and our mission is
-                to simplify the event planning and coordinating process.
-            </p>
-        </div>
-
-        <div>
-            <h3>Features:</h3>
-            <ul>
-                <li>Event Home Page Hosting</li>
-                <li>Athlete Registration</li>
-                <li>Judge Registration</li>
-                <li>Event Scheduling</li>
-                <li>Workout Planning</li>
-                <li>Heat Planning</li>
-                <li>Vendor Planning</li>
-            </ul>
-        </div>
-
     </body>
     <footer>
 
