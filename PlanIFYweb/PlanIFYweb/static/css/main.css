@@ -41,6 +41,15 @@ a.logout-btn:hover{
     left: 0;
 }
 
+.profile-pic{
+    position: absolute;
+    left: 16px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
 /*New event button on home page*/
 .filler{
     margin-top: 50px;

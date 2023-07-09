@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 # Create your models here.
 STATUS = [
@@ -68,7 +69,7 @@ class UserAccount(models.Model):
     vendor_user = models.BooleanField(null=True, blank=True)
     vendor_user_approved = models.BooleanField(null=True, blank=True, default=False)
     user_bio = models.TextField(null=True, max_length=250, blank=True)
-    user_picture = models.ImageField(upload_to='media/profile_img',null=True, blank=True)
+    user_picture = models.ImageField(upload_to='profile_img/',null=True, blank=True)
 
 
     def __str__(self) -> str:
@@ -146,7 +147,7 @@ class Event(models.Model):
     event_waiver = models.BooleanField(default=False)
     event_waiver_document = models.FileField(null=True, blank=True)
     event_prizes = models.BooleanField(default=False)
-    event_banner = models.ImageField(upload_to='media/images', null=True, blank=True)
+    event_banner = models.ImageField(upload_to='images/', null=True, blank=True)
     event_vendors = models.BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -157,7 +158,8 @@ class Event(models.Model):
 class EventParticipant(models.Model):
     participants = models.AutoField(primary_key=True)
     event_id_number = models.ForeignKey(Event, on_delete=models.CASCADE)
-    first_name_of_athlete = models.ForeignKey(UserAccount, on_delete=models.CASCADE, blank=True, null=True)
+    username = models.ForeignKey(UserAccount, on_delete=models.CASCADE, null=True)
+    first_name_of_athlete = models.CharField(max_length=100, blank=True, null=True)
     last_name_of_athlete = models.CharField(max_length=100, blank=True, null=True)
     email_of_athlete = models.CharField(max_length=100, blank=True)
     event_joing_date = models.DateField(null=False, auto_created=True)

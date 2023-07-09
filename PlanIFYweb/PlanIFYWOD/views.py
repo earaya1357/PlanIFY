@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import UserAccount, Event, EventWorkOut, EventHelp, EventParticipant
 from django.contrib.auth.models import User
-
+import datetime as dt
 
 #Registion page for new users to sign up for the site.
 def register(request):
@@ -82,39 +82,48 @@ def checkstatus(request):
     athlete_approved = usern[0]['athlete_user_approved']
     host_approved = usern[0]['host_user_approved']
     vendor_approved = usern[0]['vendor_user_approved']
-    return athlete_approved, host_approved, vendor_approved
+    img = usern[0]['user_picture']
+    return athlete_approved, host_approved, vendor_approved, img
 
 
 #User profile page
 @login_required(login_url='SignIn')
 def userprofile(request, user):
-    usern = UserAccount.objects.filter(username=request.user).values()
-    profile = UserProfileForm(instance=user)
+    usern = UserAccount.objects.get(username=request.user)
+    usern2 = UserAccount.objects.filter(username=request.user).values()
+    print(usern2[0])
+    profile = UserProfileForm(initial=usern2[0])
 
-    return render(request, 'PlanIFYweb/profile.html', {'profile': profile})
+    if request.method == 'POST':
+        profile = UserProfileForm(request.POST, request.FILES, instance=usern)
+        if profile.is_valid():
+            profile.save()
+
+    return render(request, 'PlanIFYweb/profile.html', {'pagename': request.user,'profile': profile})
 
 #Home page for users
 @login_required(login_url='SignIn')
 def home(request):
     usern = UserAccount.objects.filter(username=request.user).values()
-    athlete, host, vendor = checkstatus(request)
-
+    athlete, host, vendor, img = checkstatus(request)
+    ev = EventParticipant.objects.filter(username=usern[0]['user_id_number']).values()
+    #print(ev)
     
     #Filter events if the user is an athlete and has signed up for events
     if athlete:
-        athleteevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values()
+        athleteevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values().order_by('event_date')
     else:
         athleteevents = None
 
     #Filter events if the user is a host and has created events
     if host:
-        hostevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values()
+        hostevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values().order_by('event_date')
     else:
         hostevents = None
 
     #Filter events if the user is a vendor and has signed up to cater events
     if vendor:
-        vendorevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values()
+        vendorevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values().order_by('event_date')
     else:
         vendorevents = None
     
@@ -136,9 +145,10 @@ def home(request):
                 print(data)
             
 
-    return render(request, 'PlanIFYweb/dashboard.html', {'pagename':'Home', 'hostevents': hostevents, 'athleteevents': athleteevents, 'vendorevents': vendorevents,'form1':form1, 'form2':form2})
+    return render(request, 'PlanIFYweb/dashboard.html', {'pagename':'Home', 'profile_pic':img,'hostevents': hostevents, 'athleteevents': athleteevents, 'vendorevents': vendorevents,'form1':form1, 'form2':form2, 'host': host, 'athlete': athlete, 'vendor': vendor})
 
 
+#Create an initial event.
 @login_required(login_url='SignIn')
 def eventdesign(request, eventname):
     usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']
@@ -157,7 +167,7 @@ def eventdesign(request, eventname):
     return render(request, 'PlanIFYweb/eventdesign.html', {'pagename': eventname, 'form': form})
 
 
-
+#Edit an event created by the host.
 @login_required(login_url='SignIn')
 def hostedevents(request, id):
     usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']

@@ -7,17 +7,35 @@
     </div>
 
     <div class="action-button-list">
+        {% if host %}
         <button type="button" id="new-event-button" class="new-event-button" role="button">
             Create a New Event
         </button>
+        {% endif %}
 
+        {% if host %}
         <button type="button" id="new-affiliate-button" class="new-event-button" role="button">
             Create a New Affiliate
         </button>
+        {% endif %}
 
+        {% if athlete %}
         <button type="button" id="join-affiliate-button" class="new-event-button" role="button">
             Join an Affiliate
         </button>
+        {% endif %}
+    
+        {% if athlete %}
+        <button type="button" id="join-affiliate-button" class="new-event-button" role="button">
+            Find an Event
+        </button>
+        {% endif %}
+
+        {% if vendor %}
+        <button type="button" id="new-event-button" class="new-event-button" role="button">
+            Cater an Event
+        </button>
+        {% endif %}
     </div>
 
 
@@ -30,16 +48,16 @@
                     {% for event in athleteevents %}
                     <div class="event-div"> 
                         {% if event.event_banner %}
-                        <img src="{{event.event_banner}}"/>
+                        <img src="media/{{event.event_banner}}"/>
                         {% else %}
                         <img src="{% static '/media/images/generic_workout.jpeg' %}"/>
                         {% endif %}
                         <div class="event-info-div">
                             <div>
                                 <h2>{{event.event_name}} : {{event.event_date}}</h2>
+                                <h2>Days Until: {{ event.DaysUntilEvent }}</h2>
                                 <p>{{event.event_description}}</p>
                             </div>
-                            <img src="{% static '/media/images/generic_avatar.png'  %}" class="event-host" />
                         </div>
                         <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
                     </div>
@@ -55,7 +73,7 @@
                     {% for event in hostevents %}
                     <div class="event-div">
                         {% if event.event_banner %}
-                        <img src="{{event.event_banner}}"/>
+                        <img src="media/{{event.event_banner}}"/>
                         {% else %}
                         <img src="{% static '/media/images/generic_workout.jpeg' %}"/>
                         {% endif %}
@@ -65,7 +83,6 @@
                                 <p>{{event.event_description}}</p>
                             </div>
                             <h2 class="event-price">{{event.event_price_athlete}}</h2>
-                            <img src="{% static '/media/images/generic_avatar.png'  %}" class="event-host" />
                         </div>
                         <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
                     </div>
@@ -94,7 +111,6 @@
                             <p>{{event.event_description}}</p>
                         </div>
                         <h2 class="event-price">{{event.event_size}}</h2>
-                        <img src="{% static '/media/images/generic_avatar.png'  %}" class="event-host" />
                     </div>
                     <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
                 </div>
