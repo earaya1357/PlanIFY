@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'PlanIFYWOD',
     'PlanIFYweb',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

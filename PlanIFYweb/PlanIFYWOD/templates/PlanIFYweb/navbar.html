@@ -6,20 +6,28 @@
         <title>{{ title }}</title>
         <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
     </head>
-    
+    {% if user.is_authenticated %}
         <div class="nav-bar">
-            <a href="{% url 'Profile' user=user%}" class="navlink">{{ user }}
+            <a href="{% url 'Profile' user=user %}"><div class="dashboard-button">{{user}}</div></a>
                 {% if profile_pic %}
                     <img src="media/{{ img }}" class="profile-pic" />
                 {% else %}
                 <img src="{% static '/media/images/generic_avatar.png'  %}" class="profile-pic" />
                 {% endif %}
             </a>
-            <a href="{% url 'Home' %}" class="navlink">Home</a>
-            <a href="{% url 'SignOut' %}" class="navlink">Logout</a>
+            <a href="{% url 'Home' %}"><div class="dashboard-button">Home</div></a>
+            <a href="{% url 'SignOut' %}"><div class="dashboard-button">Logout</div></a>
             <center><h3>{{pagename}}</h3></center>
         </div>
 
+    {% else %}
+    <div class="nav-bar">
+        <a href="{% url 'Landing' %}"><div class="dashboard-button">Home</div></a>
+        <a href="{% url 'SignIn' %}"><div class="sign-in-btn">Sign In</div></a>
+        <a href="{% url 'Register' %}"><div class="sign-up-btn">Sign Up</div></a>
+        <center><h3>{{pagename}}</h3></center>
+    </div>
+    {% endif %}
     {% block content %}
 
     {% endblock%}

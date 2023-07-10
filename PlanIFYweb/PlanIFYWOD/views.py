@@ -5,8 +5,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import UserAccount, Event, EventWorkOut, EventHelp, EventParticipant
+from .filters import EventSearchFilter
 from django.contrib.auth.models import User
 import datetime as dt
+
 
 #Registion page for new users to sign up for the site.
 def register(request):
@@ -74,7 +76,7 @@ def usersignin(request):
 #Sign out page for all users
 def usersignout(request):
     logout(request)
-    return render(request, 'PlanIFYweb/signin.html')
+    return render(request, 'PlanIFYweb/home.html')
 
 
 def checkstatus(request):
@@ -211,7 +213,9 @@ def prepareevent(request, event):
 
 
 def eventserach(request):
-    return render(request, 'PlanIFYweb/search.html', {})
+    filter = EventSearchFilter(request.GET, queryset=Event.objects.all())
+    events = filter.qs
+    return render(request, 'PlanIFYweb/search.html', {'events': events,'filter': filter.form})
 
 
 #General serach page for events. 

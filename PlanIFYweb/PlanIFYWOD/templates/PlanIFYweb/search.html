@@ -6,19 +6,32 @@
         <h1 class="filler-text">filler</h1>
     </div>
     <div class="search-bar">
-        <input type="text" class="search-box" placeholder="Search">
-        <input type="button" class="search-btn" value="SEARCH">
+
+        <form method="get" >
+            {{filter}}
+            <input type="submit">
+        </form>
     </div>
 
     <div class="search-results-area">
-    <!--search results here-->
-        <div>
-            <h4>Host: </h4>
-            <h4>Location: </h4>
-            <h4>Date: </h4>
-            <h4>Price: </h4>
-            <h4>Description: </h4>
-        </div>
+    
+        {% for event in events %}
+            <div class="event-div"> 
+            {% if event.event_banner %}
+                <img src="{{event.event_banner}}"/>
+            {% else %}
+                <img src="{% static '/media/images/generic_workout.jpeg' %}"/>
+            {% endif %}
+                <div class="event-info-div">
+                    <div>
+                        <h2>{{event.event_name}} - {{event.event_date}} - {{event.event_host_user}}</h2>
+                        <h2>Price: ${{event.event_price_athlete}}</h2>
+                        <p>{{event.event_description}}</p>
+                    </div>
+                </div>
+                <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+            </div>
+        {% endfor %}
 
     </div>
 
