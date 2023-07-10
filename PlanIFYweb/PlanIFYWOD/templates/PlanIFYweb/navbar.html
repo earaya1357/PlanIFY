@@ -16,12 +16,8 @@
                 {% endif %}
             </a>
             <a href="{% url 'Home' %}" class="navlink">Home</a>
-            <a href="{% url 'SignOut' %}" class="logout-btn" class="navlink">Logout</a>
-            <header>
-                <div class="header-container">
-                    <center><h3>{{pagename}}</h3></center>
-            </div>
-            </header>
+            <a href="{% url 'SignOut' %}" class="navlink">Logout</a>
+            <center><h3>{{pagename}}</h3></center>
         </div>
 
     {% block content %}

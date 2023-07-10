@@ -13,5 +13,6 @@ urlpatterns = [
     path('event/prepare/<str:event>', views.prepareevent, name='PrepareEvent'),
     path('PlanIFY', views.homepage, name='Landing'),
     path('profile/<str:user>', views.userprofile, name='Profile'),
+    path('PlanIFY/find-event', views.eventserach, name='EventSearch'),
    # path('find-event/event/<str:event>', views.generalevent, name='GeneralEvent'),
 ]

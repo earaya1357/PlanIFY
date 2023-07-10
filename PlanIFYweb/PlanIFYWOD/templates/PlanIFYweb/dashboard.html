@@ -8,33 +8,33 @@
 
     <div class="action-button-list">
         {% if host %}
-        <button type="button" id="new-event-button" class="new-event-button" role="button">
+        <div type="button" id="new-event-button" class="dashboard-button" role="button">
             Create a New Event
-        </button>
+        </div>
         {% endif %}
 
         {% if host %}
-        <button type="button" id="new-affiliate-button" class="new-event-button" role="button">
+        <div type="button" id="new-affiliate-button" class="dashboard-button" role="button">
             Create a New Affiliate
-        </button>
+        </div>
         {% endif %}
 
         {% if athlete %}
-        <button type="button" id="join-affiliate-button" class="new-event-button" role="button">
+        <div type="button" id="join-affiliate-button" class="dashboard-button" role="button">
             Join an Affiliate
-        </button>
+        </div>
         {% endif %}
     
         {% if athlete %}
-        <button type="button" id="join-affiliate-button" class="new-event-button" role="button">
+        <div type="button" id="serach-event-button" class="dashboard-button" role="button">
             Find an Event
-        </button>
+        </div>
         {% endif %}
 
         {% if vendor %}
-        <button type="button" id="new-event-button" class="new-event-button" role="button">
+        <div type="button" id="new-event-button" class="dashboard-button" role="button">
             Cater an Event
-        </button>
+        </div>
         {% endif %}
     </div>
 
@@ -173,6 +173,7 @@
     const modal2 = document.getElementById("join-affiliate-dialog");
     const closebtn2 = document.getElementById("close-btn-2");
     const searchbtn = document.getElementById("search");
+    const eventsearchbtn = document.getElementById("serach-event-button");
 
     joinaffiliate.addEventListener('click', ()=>{
         modal2.showModal();
@@ -184,7 +185,10 @@
 
     searchbtn.addEventListener('click', ()=>{
         document.write(eventname)
-        console.log(eventname)
+    })
+
+    eventsearchbtn.addEventListener('click', ()=>{
+        window.location = "{% url 'EventSearch' %}"
     })
 </script>
 {% endblock %}

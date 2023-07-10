@@ -209,6 +209,11 @@ def prepareevent(request, event):
 
     return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
 
+
+def eventserach(request):
+    return render(request, 'PlanIFYweb/search.html', {})
+
+
 #General serach page for events. 
 def generalevent(request, event):
     pass
