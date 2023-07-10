@@ -13,19 +13,14 @@
                 <a href="{% url 'SignIn' %}"><div class="sign-in-btn">Sign In</div></a>
                 <img src="{% static '/media/images/PlanIFY_LOGO.png' %}" class="logo">
             </div>
-<!---
-            <div class="intro-div">
-                <h1 class="section-title">PlanIFY</h1>
-                <h4 style="color: white; text-align: center;">Less setup more reps</h4>
-            </div>
---->
+
     <hr>
             <div class="search-div">
                 <h1 class="section-title">Events</h1>
                 <div>
                     <div>
                         <h4 style="color: white; margin-left: 5px; text-align: center;">Find an Event</h4>
-                        <a href=""><div class="search-btn">Search</div></a>
+                        <a href="{% url 'EventSearch' %}"><div class="dashboard-button">Find an Event</div></a>
                     </div>
                 </div>
             </div>
@@ -54,6 +49,7 @@
             </div>
         </div>
     </body>
+
     <footer>
 
     </footer>
