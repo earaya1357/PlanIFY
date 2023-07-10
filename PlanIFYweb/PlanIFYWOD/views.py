@@ -113,19 +113,19 @@ def home(request):
     
     #Filter events if the user is an athlete and has signed up for events
     if athlete:
-        athleteevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values().order_by('event_date')
+        athleteevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).all().order_by('event_date')
     else:
         athleteevents = None
 
     #Filter events if the user is a host and has created events
     if host:
-        hostevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values().order_by('event_date')
+        hostevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).all().order_by('event_date')
     else:
         hostevents = None
 
     #Filter events if the user is a vendor and has signed up to cater events
     if vendor:
-        vendorevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).values().order_by('event_date')
+        vendorevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).all().order_by('event_date')
     else:
         vendorevents = None
     

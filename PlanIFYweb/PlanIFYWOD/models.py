@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+from datetime import date
 
 # Create your models here.
 STATUS = [
@@ -152,6 +152,11 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return self.event_name
+    
+    @property
+    def daystoevent(self):
+        dayslefttoevent = str(self.event_date - date.today()).split(',')[0]
+        return dayslefttoevent
     
 
 
