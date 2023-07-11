@@ -1,12 +1,78 @@
+{% extends 'PlanIFYweb/navbar.html' %}
 {% load static %}
 {% block content %}
-<html>
-    <head>
-        {{eventname}}
-    </head>
-    <body>
-        
-    </body>
+<body style="background-color: rgb(60, 61, 61);">
+    <div class="filler">
+        <h1 class="filler-text" style="color: rgb(60, 61, 61);">filler</h1>
+    </div>
 
-</html>
+    <div class="home-page-div">
+        <div>
+            
+            {% if event.event_banner %}
+            <img src="media/{{event_info.event_banner}}" class="banner"/>
+            {% else %}
+            <img src="{% static '/media/images/generic_workout.jpeg' %}" class="banner"/>
+            {% endif %}
+            <h1 class="section-title" style="font-family: Arial, Helvetica, sans-serif; font-size: 56pt;">{{event_info.event_name}}</h1>
+            <h3 class="section-title">Event Type: {{event_info.event_type}}</h3>
+            <h3 class="section-title">{{event_info.event_name}} - {{event_info.event_date}}</h3>
+            <p>{{event_info.event_long_description}}</p>
+        </div>
+    <hr>
+        <div>
+            <h1 class="section-title">Location</h1>
+            <h3>Hosted by: {{event_info.event_host_user}}</h3>
+            <h3>Location: {{event_info.event_location}}</h3>
+            <h3>Address: {{event_info.event_address}}</h3>
+            <h3>State: {{event_info.event_state}}</h3>
+
+        </div>
+    <hr>
+        <div>
+            <h1 class="section-title">Registration and Pricing</h1>
+            <h3 class="section-title">Registration Dates:</h3>
+            <h4 class="section-title">Registration Opens: {{event_info.event_registration_date_open}}</h4>
+            <h4 class="section-title">Registration Closes: {{event_info.event_registration_date_close}}</h4>
+            <div class="section-title">
+                <a href=""><div class="sign-in-btn" id="athlete-btn">Athlete Register: ${{event_info.event_price_athlete}}</div></a>
+                <a href=""><div class="sign-in-btn" id="judge-btn">Judge Register</div></a>
+                <a href=""><div class="sign-in-btn" id="general-btn">General Admission: ${{event_info.event_price_general}}</div></a>
+            </div>
+        </div>
+        {% if event_info.event_tshirts %}
+    <hr>
+        <div>
+            <h1 class="section-title">T-Shirts</h1>
+            <h4 class="section-title">Price: ${{event_info.event_tshirts_price}}</h4>
+            {% if event_info.event_tshirt_image %}
+            <img class="banner" src="media/{{event_info.event_tshirt_image}}" >
+            {% else %}
+            {% endif %}
+        </div>
+        {% endif %}
+    <hr>
+        <div>
+            <h1 class="section-title">QR Code and Sharing</h1>
+            <div id="qrcode" class="qrcode"></div>
+            <h3 id="qrcode" class="qrcode-text">{{ qr }}</h3>
+        </div>
+    </div>
+
+        
+</body>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<script type="text/javascript">
+
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "{{ qr }}",
+        width: 256,
+        height: 256,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+</script>
+
 {% endblock %}

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import UserAccount, Event, EventWorkOut, EventHelp, EventParticipant
 from .filters import EventSearchFilter
 from django.contrib.auth.models import User
+from django.template import *
 import datetime as dt
 
 
@@ -220,7 +221,10 @@ def eventserach(request):
 
 #General serach page for events. 
 def generalevent(request, event):
-    pass
+    event_info = Event.objects.get(event_name=event)
+    qr = request.path
+    print(event_info.event_tshirts)
+    return render(request, 'PlanIFYweb/eventpage.html',{'event_info': event_info, 'qr': qr})
 
 
 #Landing page for all visitors.

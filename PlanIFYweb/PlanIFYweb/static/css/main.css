@@ -246,6 +246,21 @@ padding-top: 2%;
     text-align: center;
 }
 
+.banner{
+    position: relative;
+    object-fit: fill;
+}
+
+.qrcode-text{
+    text-align: center;
+    color: white;
+}
+
+.qrcode{
+    position: relative;
+    left: 43%;
+}
+
 .search-div{
     margin-bottom: 150px;
     margin-left: 5px;

@@ -29,7 +29,7 @@
                         <p>{{event.event_description}}</p>
                     </div>
                 </div>
-                <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                <a href="{% url 'GeneralEvent' event=event.event_name %}" class='event-link'></a>
             </div>
         {% endfor %}
 
