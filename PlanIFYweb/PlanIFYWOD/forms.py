@@ -58,7 +58,7 @@ class CreateUserForm(UserCreationForm):
 class EventParticipantForm(ModelForm):
     class Meta:
         model = EventParticipant
-        fields = ['event_id_number', 'first_name_of_athlete', 'last_name_of_athlete', 'email_of_athlete']
+        fields = '__all__'
 
 
 class EventName(forms.Form):

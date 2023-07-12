@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import UserAccount, Event, EventWorkOut, EventHelp, EventParticipant
+from .models import UserAccount, Event, EventWorkOut, EventTeam, EventParticipant
 from .filters import EventSearchFilter
 from django.contrib.auth.models import User
 from django.template import *

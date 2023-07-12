@@ -42,8 +42,8 @@ GENDERS = [
 ]
 
 ROLE_OPTIONS = [
+    ('Athlete', 'Athlete'),
     ('Judge', 'Judge'),
-    ('MC', 'MC'),
     ('General', 'General')
 ]
 
@@ -162,15 +162,30 @@ class Event(models.Model):
         return dayslefttoevent
     
 
+class EventTeam(models.Model):
+    id = models.AutoField(primary_key=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50, null=False, blank=False)
+    last_name = models.CharField(max_length=50, null=False, blank=False)
+    team_name = models.CharField(max_length=50, unique=True)
+
 
 class EventParticipant(models.Model):
-    participants = models.AutoField(primary_key=True)
-    event_id_number = models.ForeignKey(Event, on_delete=models.CASCADE)
-    username = models.ForeignKey(UserAccount, on_delete=models.CASCADE, null=True)
-    first_name_of_athlete = models.CharField(max_length=100, blank=True, null=True)
-    last_name_of_athlete = models.CharField(max_length=100, blank=True, null=True)
-    email_of_athlete = models.CharField(max_length=100, blank=True)
-    event_joing_date = models.DateField(null=False, auto_created=True)
+    participant = models.AutoField(primary_key=True)
+    event_name= models.ForeignKey(Event, on_delete=models.CASCADE)
+    username = models.ForeignKey(UserAccount, on_delete=models.CASCADE, null=True, blank=True)
+    first_name_of_participant = models.CharField(max_length=100, null=True)
+    last_name_of_participant = models.CharField(max_length=100, null=True)
+    age_of_participant = models.IntegerField(null=True)
+    gender_of_participant = models.CharField(choices=GENDERS, max_length=25, null=True)
+    email_of_participant = models.EmailField(max_length=100, null=True)
+    address_of_participant = models.CharField(max_length=50, null=True)
+    city_of_participant = models.CharField(max_length=50, null=True)
+    state_of_participant = models.CharField(max_length=2, null=True)
+    zip_code_of_participant = models.IntegerField(null=True)
+    event_join_date = models.DateField(null=False, auto_created=True)
+    role = models.CharField(max_length=15, choices=ROLE_OPTIONS, null=True)
+    team = models.ForeignKey(EventTeam, on_delete=models.CASCADE, null=True, blank=True)
 
 
 
@@ -191,16 +206,8 @@ class EventVendor(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
 
 
-class EventHelp(models.Model):
-    id = models.AutoField(unique=True, primary_key=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, null=False, blank=False)
-    last_name = models.CharField(max_length=50, null=False, blank=False)
-    role = models.CharField(max_length=50, choices=ROLE_OPTIONS, null=False, blank=False)
-
-
 class EventPrizes(models.Model):
-    id = models.AutoField(unique=True, primary_key=True)
+    id = models.AutoField(primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE) 
     position = models.CharField(max_length=30)
     prize_amount = models.FloatField(default=0.00) 
