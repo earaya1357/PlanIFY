@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import EventForm, CreateUserForm, UserAccountForm, EventName, AffiliateSearch, FullEventForm, EventWorkoutForm, UserProfileForm
+from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -206,7 +206,7 @@ def prepareevent(request, event):
     usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']
     event = Event.objects.get(event_name=event)
     workoutlist = EventWorkOut.objects.filter(event=event)
-    help = EventHelp.objects.filter(event=event)
+    help = EventParticipant.objects.filter(event=event, role='Judge')
     athletes = EventParticipant.objects.filter(event_id_number=event)
     print(help)
 
@@ -221,10 +221,33 @@ def eventserach(request):
 
 #General serach page for events. 
 def generalevent(request, event):
+    usern = None
+    athlete = None
+    try:
+        usern = UserAccount.objects.get(username=request.user)
+    except:
+        pass
+    if usern:
+        athlete, _, _, img = checkstatus(request)
     event_info = Event.objects.get(event_name=event)
     qr = request.path
-    print(event_info.event_tshirts)
-    return render(request, 'PlanIFYweb/eventpage.html',{'event_info': event_info, 'qr': qr})
+
+    if usern:
+        form = EventParticipantForm(initial={'first_name_of_participant': usern.first_name_user, 
+                                             'last_name_of_participant': usern.last_name_user, 
+                                             'birthday_of_participant': usern.birthday_user, 
+                                             'gender_of_participant': usern.gender_user,
+                                             'email_of_participant': usern.email_user,
+                                             'city_of_participant': usern.city_user,
+                                             'zip_code_of_participant': usern.zip_code_user,
+                                             'address_of_participant': usern.address_user,
+                                             })
+    else:
+        form = EventParticipantForm()
+
+
+
+    return render(request, 'PlanIFYweb/eventpage.html',{'event_info': event_info, 'qr': qr, 'form': form})
 
 
 #Landing page for all visitors.

@@ -35,9 +35,9 @@
             <h4 class="section-title">Registration Opens: {{event_info.event_registration_date_open}}</h4>
             <h4 class="section-title">Registration Closes: {{event_info.event_registration_date_close}}</h4>
             <div class="section-title">
-                <a href=""><div class="sign-in-btn" id="athlete-btn">Athlete Register: ${{event_info.event_price_athlete}}</div></a>
-                <a href=""><div class="sign-in-btn" id="judge-btn">Judge Register</div></a>
-                <a href=""><div class="sign-in-btn" id="general-btn">General Admission: ${{event_info.event_price_general}}</div></a>
+                <button id="athlete-register">Athlete Register: ${{event_info.event_price_athlete}}</button>
+                <button id="judge-register">Judge Register</button> 
+                <button id="general-register">General Admission: ${{event_info.event_price_general}}</button>
             </div>
         </div>
         {% if event_info.event_tshirts %}
@@ -59,6 +59,15 @@
         </div>
     </div>
 
+    <dialog id="register-form">
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+
+            </form>
+        </div>
+    </dialog>
         
 </body>
 <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -72,7 +81,23 @@
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
     });
+</script>
+<script type="text/javascript">
+    const modal = document.getElementById("register-form");
+    const athlete_register = document.getElementById("athlete-register");
+    const eventname = "{{event_info.event_name}}";
+    const role = document.getElementById('{{form.id_role}}')
 
+    athlete_register.addEventListener('click', ()=>{
+        
+        modal.showModal();
+        role.style.display = 'block';
+    })
+
+    if ("{{user}}"){
+        console.log(eventname)
+
+    }
 </script>
 
 {% endblock %}
