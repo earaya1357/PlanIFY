@@ -203,11 +203,12 @@ def hostedevents(request, id):
 #Page to allow host users to get prepared for an event 
 @login_required(login_url='SignIn')
 def prepareevent(request, event):
-    usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']
+    usern = UserAccount.objects.get(username=request.user)
     event = Event.objects.get(event_name=event)
     workoutlist = EventWorkOut.objects.filter(event=event)
-    help = EventParticipant.objects.filter(event=event, role='Judge')
-    athletes = EventParticipant.objects.filter(event_id_number=event)
+    help = None#EventParticipant.objects.filter(event=event, role='Judge')
+    athletes = EventParticipant.objects.filter(event_name=event).values()
+    print(athletes[0])
     print(help)
 
     return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
@@ -223,6 +224,8 @@ def eventserach(request):
 def generalevent(request, event):
     usern = None
     athlete = None
+    e = Event.objects.get(event_name=event)
+    print(e)
     try:
         usern = UserAccount.objects.get(username=request.user)
     except:
@@ -241,9 +244,16 @@ def generalevent(request, event):
                                              'city_of_participant': usern.city_user,
                                              'zip_code_of_participant': usern.zip_code_user,
                                              'address_of_participant': usern.address_user,
+                                             'role': 'Athlete',
+                                             'event_name': e
                                              })
     else:
         form = EventParticipantForm()
+
+    if request.method == 'POST':
+        form = EventParticipantForm(request.POST)
+        if form.is_valid():
+            form.save()
 
 
 

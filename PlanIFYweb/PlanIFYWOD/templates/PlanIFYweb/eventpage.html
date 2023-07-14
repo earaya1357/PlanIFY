@@ -17,7 +17,7 @@
             <h1 class="section-title" style="font-family: Arial, Helvetica, sans-serif; font-size: 56pt;">{{event_info.event_name}}</h1>
             <h3 class="section-title">Event Type: {{event_info.event_type}}</h3>
             <h3 class="section-title">{{event_info.event_name}} - {{event_info.event_date}}</h3>
-            <p>{{event_info.event_long_description}}</p>
+            <p class="section-title">{{event_info.event_long_description}}</p>
         </div>
     <hr>
         <div>
@@ -44,11 +44,14 @@
     <hr>
         <div>
             <h1 class="section-title">T-Shirts</h1>
-            <h4 class="section-title">Price: ${{event_info.event_tshirts_price}}</h4>
-            {% if event_info.event_tshirt_image %}
-            <img class="banner" src="media/{{event_info.event_tshirt_image}}" >
-            {% else %}
-            {% endif %}
+            <div class="section-title">
+                <h4 class="section-title">Price: ${{event_info.event_tshirts_price}}</h4>
+                <button id="tshirt-purchase">T-Shirt Purchase: ${{event_info.event_tshirts_price}}</button>
+                {% if event_info.event_tshirt_image %}
+                <img class="banner" src="media/{{event_info.event_tshirt_image}}" >
+                {% else %}
+                {% endif %}
+            </div>
         </div>
         {% endif %}
     <hr>
@@ -61,13 +64,16 @@
 
     <dialog id="register-form">
         <div>
+            <h3 id="register-form-title" style="text-align: center;">Registration</h3>
             <form method="post">
                 {% csrf_token %}
                 {{form.as_p}}
-
+                <input type="submit" value="Register">
             </form>
         </div>
     </dialog>
+
+
         
 </body>
 <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -87,11 +93,12 @@
     const athlete_register = document.getElementById("athlete-register");
     const eventname = "{{event_info.event_name}}";
     const role = document.getElementById('{{form.id_role}}')
+    var formtitle = document.getElementById("register-form-title")
 
     athlete_register.addEventListener('click', ()=>{
         
         modal.showModal();
-        role.style.display = 'block';
+        formtitle.innerHTML = "Athlete Registration"
     })
 
     if ("{{user}}"){

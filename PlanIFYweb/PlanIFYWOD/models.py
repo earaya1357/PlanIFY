@@ -183,7 +183,7 @@ class EventParticipant(models.Model):
     city_of_participant = models.CharField(max_length=50, null=True)
     state_of_participant = models.CharField(max_length=2, null=True)
     zip_code_of_participant = models.IntegerField(null=True)
-    event_join_date = models.DateField(null=False, auto_created=True)
+    event_join_date = models.DateField(null=False, auto_now_add=True)
     role = models.CharField(max_length=15, choices=ROLE_OPTIONS, null=True)
     team = models.ForeignKey(EventTeam, on_delete=models.CASCADE, null=True, blank=True)
 
