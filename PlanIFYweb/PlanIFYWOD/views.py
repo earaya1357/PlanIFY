@@ -208,8 +208,7 @@ def prepareevent(request, event):
     workoutlist = EventWorkOut.objects.filter(event=event)
     help = None#EventParticipant.objects.filter(event=event, role='Judge')
     athletes = EventParticipant.objects.filter(event_name=event).values()
-    print(athletes[0])
-    print(help)
+
 
     return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
 

@@ -47,6 +47,10 @@ ROLE_OPTIONS = [
     ('General', 'General')
 ]
 
+CLASS_TYPE = [
+    ('Rx', 'Rx'),
+    ('Scaled', 'Scaled')
+]
 
 class UserAccount(models.Model):
     username = models.OneToOneField(User, null=True, on_delete=models.CASCADE, blank=True, db_column='username')
@@ -185,6 +189,7 @@ class EventParticipant(models.Model):
     zip_code_of_participant = models.IntegerField(null=True)
     event_join_date = models.DateField(null=False, auto_now_add=True)
     role = models.CharField(max_length=15, choices=ROLE_OPTIONS, null=True)
+    class_type = models.CharField(max_length=10, choices=CLASS_TYPE)
     team = models.ForeignKey(EventTeam, on_delete=models.CASCADE, null=True, blank=True)
 
 
