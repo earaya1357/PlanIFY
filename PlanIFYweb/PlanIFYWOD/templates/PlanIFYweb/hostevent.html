@@ -10,15 +10,17 @@
             {% csrf_token %}
             {{form.as_p}}
             
-            <input type="submit" >
+            <input type="submit" value="SAVE">
         </form>
         <br>
 
     </div>
+    <br>
+    <br>
     <button>
         <a href="{% url 'PrepareEvent' event=pagename %}">Prepare Event</a>
     </button>
-
+    <br>
     <br>
     <div class="add-workout-form">
         <button id="add-workouts" class="add-workouts">Add Workouts</button>
@@ -59,11 +61,14 @@
     </dialog>
 </body>
 <script>
-    const addbtn = document.getElementById("add-workouts")
-    const workoutdialog = document.getElementById("workout-dialog")
+    const addbtn = document.getElementById("add-workouts");
+    const workoutdialog = document.getElementById("workout-dialog");
+    const eventname = document.getElementById("id_event");
+    const eventnamelbl = document.getElementById("id_event");
 
     addbtn.addEventListener('click', ()=>{
-        workoutdialog.showModal()
+        eventname.style.display = 'none';
+        workoutdialog.showModal();
     })
 </script>
 

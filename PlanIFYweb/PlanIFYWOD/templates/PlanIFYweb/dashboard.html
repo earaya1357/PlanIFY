@@ -59,7 +59,7 @@
                                 <p>{{event.event_description}}</p>
                             </div>
                         </div>
-                        <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                        <a href="{% url 'HostedEvent' eventname=event.event_name %}" class='event-link'></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -84,7 +84,7 @@
                             </div>
                             <h2 class="event-price">{{event.event_price_athlete}}</h2>
                         </div>
-                        <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                        <a href="{% url 'HostedEvent' eventname=event.event_name %}" class='event-link'></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -112,7 +112,7 @@
                         </div>
                         <h2 class="event-price">{{event.event_size}}</h2>
                     </div>
-                    <a href="{% url 'HostedEvent' id=event.event_id %}" class='event-link'></a>
+                    <a href="{% url 'HostedEvent' eventname=event.event_name %}" class='event-link'></a>
                 </div>
                 {% endfor %}
             </div>

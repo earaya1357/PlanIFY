@@ -93,9 +93,7 @@ def checkstatus(request):
 @login_required(login_url='SignIn')
 def userprofile(request, user):
     usern = UserAccount.objects.get(username=request.user)
-    usern2 = UserAccount.objects.filter(username=request.user).values()
-    print(usern2[0])
-    profile = UserProfileForm(initial=usern2[0])
+    profile = UserProfileForm(instance=usern)
 
     if request.method == 'POST':
         profile = UserProfileForm(request.POST, request.FILES, instance=usern)
@@ -172,23 +170,25 @@ def eventdesign(request, eventname):
 
 #Edit an event created by the host.
 @login_required(login_url='SignIn')
-def hostedevents(request, id):
-    usern = UserAccount.objects.filter(username=request.user).values()[0]['user_id_number']
-    event = Event.objects.get(event_id=id)
+def hostedevents(request, eventname):
+    usern = UserAccount.objects.get(username=request.user)
+    event = Event.objects.get(event_name=eventname)
     form = FullEventForm(instance=event)
-    form2 = EventWorkoutForm(instance=event)
-    workouts = EventWorkOut.objects.filter(event=id)
+    form2 = EventWorkoutForm(initial={'event': event})
+    workouts = EventWorkOut.objects.filter(event=event)
+
 
     if request.method == 'POST':
         try:
             if request.POST.get('workout_name'):
                 form2 = EventWorkoutForm(request.POST, request.FILES)
+                print(form2['event'])
                 if form2.is_valid():
                     form2.save()
                     
     
             elif request.POST.get('event_name'):
-                form = FullEventForm(request.POST, request.FILES, instance=event)
+                form = FullEventForm(request.POST, request.FILES)
                 if form.is_valid():
                     form.save()
                     

@@ -23,6 +23,7 @@ class EventForm(ModelForm):
         fields = '__all__'
         widgets = {
             'event_date': DateIn(),
+            'event_start_time' : TimeIn(),
             'event_date_created': DateIn(),
             'event_registration_date_open': DateIn(),
             'event_registration_date_close': DateIn(),
@@ -38,7 +39,6 @@ class FullEventForm(ModelForm):
             'event_date_created': DateIn(),
             'event_registration_date_open': DateIn(),
             'event_registration_date_close': DateIn(),
-
         }
 
 
@@ -46,6 +46,10 @@ class UserAccountForm(ModelForm):
     class Meta:
         model = UserAccount
         fields = '__all__'
+        widgets = {
+            'birthday_user' : DateIn(),
+            'email_user' : forms.EmailInput()
+        }
 
 
 
@@ -73,3 +77,7 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = UserAccount
         fields = '__all__'
+        widgets = {
+            'birthday_user' : DateIn(),
+            'email_user' : forms.EmailInput()
+        }

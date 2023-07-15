@@ -196,7 +196,7 @@ class EventParticipant(models.Model):
 
 class EventWorkOut(models.Model):
     id = models.AutoField(unique=True, primary_key=True)
-    event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     workout_name = models.CharField(max_length=50, blank=True)
     workout_type = models.CharField(max_length=50, choices=WORKOUT_TYPES)
     workout_description = models.TextField(max_length=250, blank=True, null=True)
