@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django import forms
+from django.forms.widgets import TextInput
 from .models import UserAccount, Event, EventParticipant, EventWorkOut, EventVendor, Vendor
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
