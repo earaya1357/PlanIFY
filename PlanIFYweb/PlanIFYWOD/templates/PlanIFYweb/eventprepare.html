@@ -40,7 +40,7 @@
         <h2>Participants</h2>
         {% if athletes %}
             {% for athlete in athletes %}
-            <div class="athlete-list-main" id="athlete-list-main" style="border: 1px solid black; width: 18%; margin: 5px;"> {{athlete.first_name_of_participant}} {{athlete.last_name_of_participant}}</div>
+            <div class="athlete-list-main" id="athlete-list-main" style="border: 1px solid black; width: 18%; margin: 5px;"> {{athlete.first_name_of_participant}} {{athlete.last_name_of_participant}} - {{athlete.class_type}}</div>
             {% endfor %}
         
     {% else %}

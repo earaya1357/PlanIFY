@@ -38,7 +38,7 @@
                 <td>{{workout.workout_description}}</td>
                 <td>{{workout.workout_type}}</td>
                 <td>{{workout.workout_time}}</td>
-                <td>{{workout.floater}}</td>
+                <td>{{workout.workout_floater}}</td>
                 <td><button class="update-btn">UPDATE</button></td>
                 <td><button class="delete-btn">DELETE</button></td>
             </tr>
@@ -54,7 +54,7 @@
         <form action="" method="post" enctype="multipart/form-data">
             <h3>Select the workout Type:</h3>
             {% csrf_token %}
-            {{ form2.as_p }}
+            {{form2.as_p}}
             <input type="submit">            
         </form>
         
@@ -63,11 +63,11 @@
 <script>
     const addbtn = document.getElementById("add-workouts");
     const workoutdialog = document.getElementById("workout-dialog");
-    const eventname = document.getElementById("id_event");
-    const eventnamelbl = document.getElementById("id_event");
+    //const eventname = document.getElementById("id_event");
+    //const eventnamelbl = document.getElementById("event_name");
 
     addbtn.addEventListener('click', ()=>{
-        eventname.style.display = 'none';
+        //eventname.style.display = 'none';
         workoutdialog.showModal();
     })
 </script>

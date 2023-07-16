@@ -181,8 +181,8 @@ def hostedevents(request, eventname):
     if request.method == 'POST':
         try:
             if request.POST.get('workout_name'):
-                form2 = EventWorkoutForm(request.POST, request.FILES)
-                print(form2['event'])
+                form2 = EventWorkoutForm(request.POST, request.FILES, initial={'event':event})
+
                 if form2.is_valid():
                     form2.save()
                     
