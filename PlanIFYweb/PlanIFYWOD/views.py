@@ -210,7 +210,7 @@ def prepareevent(request, event):
     athletes = EventParticipant.objects.filter(event_name=event).values()
 
 
-    return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workoutlist':workoutlist, 'help': help, 'athletes':athletes})
+    return render(request, 'PlanIFYweb/eventprepare.html', {'pagename': event, 'workout_list':workoutlist, 'help': help, 'athletes':athletes})
 
 
 def eventserach(request):
@@ -233,21 +233,43 @@ def generalevent(request, event):
         athlete, _, _, img = checkstatus(request)
     event_info = Event.objects.get(event_name=event)
     qr = request.path
-
-    if usern:
-        form = EventParticipantForm(initial={'first_name_of_participant': usern.first_name_user, 
-                                             'last_name_of_participant': usern.last_name_user, 
-                                             'birthday_of_participant': usern.birthday_user, 
-                                             'gender_of_participant': usern.gender_user,
-                                             'email_of_participant': usern.email_user,
-                                             'city_of_participant': usern.city_user,
-                                             'zip_code_of_participant': usern.zip_code_user,
-                                             'address_of_participant': usern.address_user,
-                                             'role': 'Athlete',
-                                             'event_name': e
-                                             })
+    
+    if not 'team' in e.event_type:
+        if usern:
+            form = EventParticipantForm(initial={'first_name_of_participant': usern.first_name_user, 
+                                                'last_name_of_participant': usern.last_name_user, 
+                                                'birthday_of_participant': usern.birthday_user, 
+                                                'gender_of_participant': usern.gender_user,
+                                                'email_of_participant': usern.email_user,
+                                                'city_of_participant': usern.city_user,
+                                                'zip_code_of_participant': usern.zip_code_user,
+                                                'address_of_participant': usern.address_user,
+                                                'role': 'Athlete',
+                                                'event_name': e,
+                                                'team': None
+                                                })
+        else:
+            form = EventParticipantForm(initial={'role': 'Athlete',                                             'role': 'Athlete',
+                                                'event_name': e,
+                                                'team': None})
+            
     else:
-        form = EventParticipantForm()
+        if usern:
+            form = EventParticipantForm(initial={'first_name_of_participant': usern.first_name_user, 
+                                                'last_name_of_participant': usern.last_name_user, 
+                                                'birthday_of_participant': usern.birthday_user, 
+                                                'gender_of_participant': usern.gender_user,
+                                                'email_of_participant': usern.email_user,
+                                                'city_of_participant': usern.city_user,
+                                                'zip_code_of_participant': usern.zip_code_user,
+                                                'address_of_participant': usern.address_user,
+                                                'role': 'Athlete',
+                                                'event_name': e
+                                                })
+        else:
+            form = EventParticipantForm(initial={'role': 'Athlete',                                             'role': 'Athlete',
+                                                'event_name': e})
+
 
     if request.method == 'POST':
         form = EventParticipantForm(request.POST)

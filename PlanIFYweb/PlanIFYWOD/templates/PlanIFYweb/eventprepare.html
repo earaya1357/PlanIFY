@@ -27,13 +27,32 @@
     <div>
         <h2>Workout List</h2>
         <button>Print Workouts</button>
-        <button id="plan-heat">Plan Heats</button>
         <button>Print Judge Forms</button>
-        <ol>
-            {% for workout in workoutlist %}
-            <li> {{workout.workout_name}} - {{workout.type}} - {{workout.workout_time}} - {{workout.floater}}</li>
-            {% endfor %}
-        </ol>
+        <div class="add-workout-form">
+            <table class="workout-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Workout Type</th>
+                    <th>Time</th>
+                    <th>Floater</th>
+                </tr>
+                {% for workout in workout_list %}
+                <tr>
+                    <td>{{workout.workout_name}}</td>
+                    <td>{{workout.workout_description}}</td>
+                    <td>{{workout.workout_type}}</td>
+                    <td>{{workout.workout_time}}</td>
+                    <td>{{workout.workout_floater}}</td>
+                    <td><button class="update-btn">UPDATE</button></td>
+                    <td><button class="delete-btn">DELETE</button></td>
+                    <td><button id="plan-heat">Plan Heats</button></td>
+
+                </tr>
+                    
+                {% endfor %}
+            </table>
+        </div>
         
     </div>
     <div>
@@ -65,6 +84,7 @@
     <div>
         <h2>Facility layout and Stations</h2>
     </div>
+
 
     <dialog id="heat-planning" style="width: 75%; height: 80%;">
         <div class="frame" style="columns: 2;">
