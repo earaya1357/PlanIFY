@@ -216,3 +216,10 @@ class EventPrizes(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE) 
     position = models.CharField(max_length=30)
     prize_amount = models.FloatField(default=0.00) 
+
+
+class RegisteredEvents(models.Model):
+    id = models.AutoField(primary_key=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, blank=True, db_column='username')
+    
