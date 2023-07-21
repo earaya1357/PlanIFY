@@ -87,13 +87,13 @@
 
 
     <dialog id="heat-planning" style="width: 75%; height: 80%;">
-        <div class="frame" style="columns: 2;">
+        <div class="frame" style="columns: 3;">
             <div>
                 <H3>Athletes</H3>
                 <div class="athlete-list" style="border: 1px solid black; width: 100%; height: 500px;" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
                     {% if athletes %}
                     {% for athlete in athletes %}
-                    <div class="list-item" id="list-item" style="border: 1px solid black; width: 18%; margin: 5px;" draggable="true" ondragstart="drag(event)"> {{athlete.first_name_of_participant}} {{athlete.last_name_of_participant}}</div>
+                    <div class="list-item" id="list-item" style="border: 1px solid black; width: 18%; margin: 5px;" draggable="true" ondragstart="drag(event)"> {{athlete.first_name_of_participant}} {{athlete.last_name_of_participant}} - {{athlete.class_type}}</div>
                     {% endfor %}
                 
                     {% else %}
@@ -102,6 +102,18 @@
 
                 </div>
             </div>
+            <div>
+                <h3>Judges</3>
+                <div class="athlete-list" style="border: 1px solid black; width: 100%; height: 500px;" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
+                    {% if help %}
+                        {% for helpers in help %}
+                        <div class="list-item" id="list-item" style="border: 1px solid black; width: 18%; margin: 5px;" draggable="true" ondragstart="drag(event)"> Judge - {{helpers.first_name}} {{helpers.last_name}}</div>
+                        {% endfor %}
+                
+                        {% else %}
+                        <div class="list-item" id="list-item" style="border: 1px solid black; width: 18%; margin: 5px;" draggable="false"> None</div>
+                    {% endif %}
+                </div>
             <div>
                 <h3>Heats</h3>
                 <div class="heat-list" style="border: 1px solid black; width: 100%; height: 100%; height: 500px;">
@@ -117,7 +129,7 @@
 <script>
     const plan_heat = document.getElementById("plan-heat");
     const heat_plan = document.getElementById("heat-planning");
-    const add_heat = document.getElementById("add-heat");
+    let add_heat = document.getElementById("add-heat");
     const heats = document.getElementById("heats");
     let heatcount = 1;
 
@@ -131,18 +143,18 @@
     })
 
     function allowDrop(ev) {
-  ev.preventDefault();
-}
+    ev.preventDefault();
+    }
 
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
+    function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    }
 
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
+    function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+    }
 </script>
 
 
