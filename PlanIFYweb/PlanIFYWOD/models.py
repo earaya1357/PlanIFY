@@ -223,3 +223,9 @@ class RegisteredEvents(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, blank=True, db_column='username')
     
+
+class EventWorkOutHeats(models.Model):
+    id = models.AutoField(primary_key=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE) 
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, blank=True, db_column='username')
+    rx = models.BooleanField()
