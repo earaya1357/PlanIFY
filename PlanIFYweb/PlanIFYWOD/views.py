@@ -9,7 +9,7 @@ from .filters import EventSearchFilter
 from django.contrib.auth.models import User
 from django.template import *
 import datetime as dt
-
+from django.db.models import Q
 
 #Registion page for new users to sign up for the site.
 def register(request):
@@ -112,19 +112,19 @@ def home(request):
     
     #Filter events if the user is an athlete and has signed up for events
     if athlete:
-        athleteevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).all().order_by('event_date')
+        athleteevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).filter(Q(event_date__gt=dt.date.today())).all().order_by('event_date')
     else:
         athleteevents = None
 
     #Filter events if the user is a host and has created events
     if host:
-        hostevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).all().order_by('event_date')
+        hostevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).filter(Q(event_date__gt=dt.date.today())).all().order_by('event_date')
     else:
         hostevents = None
 
     #Filter events if the user is a vendor and has signed up to cater events
     if vendor:
-        vendorevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).all().order_by('event_date')
+        vendorevents = Event.objects.filter(event_host_user=int(usern[0]['user_id_number'])).filter(Q(event_date__gt=dt.date.today())).all().order_by('event_date')
     else:
         vendorevents = None
     
@@ -249,7 +249,8 @@ def generalevent(request, event):
                                                 'team': None
                                                 })
         else:
-            form = EventParticipantForm(initial={'role': 'Athlete',                                             'role': 'Athlete',
+            form = EventParticipantForm(initial={'role': 'Athlete',
+                                                 'role': 'Athlete',
                                                 'event_name': e,
                                                 'team': None})
             

@@ -165,6 +165,7 @@ class Event(models.Model):
         dayslefttoevent = str(self.event_date - date.today()).split(',')[0]
         return dayslefttoevent
     
+    
 
 class EventTeam(models.Model):
     id = models.AutoField(primary_key=True)
