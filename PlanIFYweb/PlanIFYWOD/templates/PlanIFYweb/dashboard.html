@@ -39,12 +39,12 @@
     </div>
 
 
-    <div class="event-lists">
+    <div class="dashboard-event-lists">
         <!-- Current Events participating -->
         {% if athleteevents %}
-            <div class="athlete-list">
+            <div class="dashboard-athlete-list">
                 <div>
-                    <h3>Your Upcoming Events</h3>
+                    <h3 class="dashboard-section-title">Your Upcoming Events</h3>
                     {% for event in athleteevents %}
                     <div class="event-div"> 
                         {% if event.event_banner %}
@@ -67,9 +67,9 @@
         {% endif %}
         <!-- Current Hosting Events participating -->
         {% if hostevents %}
-            <div class="host-list">
+            <div class="dashboard-host-list">
                 <div>
-                    <h3>Your Upcoming Hosted Events</h3>
+                    <h3 class="dashboard-section-title">Your Upcoming Hosted Events</h3>
                     {% for event in hostevents %}
                     <div class="event-div">
                         {% if event.event_banner %}
@@ -95,9 +95,9 @@
 
         <!-- Current Events Vending -->
         {% if vendorevents %}
-            <div class="host-list">
+            <div class="dashboard-vendor-list">
                 
-                <h3>Your Upcoming Catering Events</h3>
+                <h3 class="dashboard-section-title">Your Upcoming Catering Events</h3>
                 {% for event in vendorevents %}
                 <div class="event-div">
                     {% if event.event_banner %}
@@ -118,6 +118,7 @@
             </div>
         {% endif %}
     </div>
+
     <!-- Dialog for creating a new event-->
         <dialog id="new-event-dialog" class="new-event-dialog">
             

@@ -69,11 +69,11 @@ a.logout-btn:hover{
 td {
     border: 1px solid;
 }
-.event-lists{
-columns: auto;
-column-width:auto;
-column-gap: 0;
+.dashboard-event-lists{
+width: auto;
 padding-top: 2%;
+padding-bottom: 5%;
+margin: 3px;
 
 
 }
@@ -105,17 +105,38 @@ padding-top: 2%;
     background-color: rgb(0, 213, 0);
 }
 /*Event cards*/
-.athlete-list{
+
+.dashboard-section-title{
+    text-align: center;
+    padding: 2px;
+
+
+}
+
+.dashboard-athlete-list{
     border-color: black solid;
     display:inline-block;
+    background-color: rgb(31, 132, 255);
+    margin: 1px;
+    border-radius: 12px;
+    padding-bottom: 2%;
 }
 
-.host-list{
+.dashboard-host-list{
     display: inline-block;
+    background-color: rgb(171,32,253);
+    margin: 1px;
+    border-radius: 12px;
+    padding-bottom: 2%;
+
 }
 
-.vendor-list{
+.dashboard-vendor-list{
     display: inline-block;
+    background-color: blue;
+    margin: 1px;
+    border-radius: 12px;
+    padding-bottom: 2%;
 }
 .event-div{
     width: 550px;
