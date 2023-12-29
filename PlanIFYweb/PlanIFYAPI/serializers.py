@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import Event, UserAccount
 from django.contrib.auth.models import User
+from django.apps import apps
 
+Event = apps.get_model('PlanIFYWOD', 'Event')
+UserAccount = apps.get_model('PlanIFYWOD', 'UserAccount')
+EventParticipant = apps.get_model('PlanIFYWOD', 'EventParticipant')
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'password', 'id']
+
+class EventParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventParticipant
+        fields = '__all__'
