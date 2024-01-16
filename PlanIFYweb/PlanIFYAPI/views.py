@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.authtoken.models import Token
 from .serializers import EventSerializer, UserAccountSerializer, UserSerializer, EventParticipantSerializer
 from django.contrib.auth.models import User
@@ -11,6 +12,31 @@ from django.apps import apps
 Event = apps.get_model('PlanIFYWOD', 'Event')
 UserAccount = apps.get_model('PlanIFYWOD', 'UserAccount')
 EventParticipant = apps.get_model('PlanIFYWOD', 'EventParticipant')
+
+@api_view(['POST'])
+def createnewuser(request):
+    data = request.data
+
+    username = data['username']
+    password = data['password']
+    re_password = data['re_password']
+
+    if password == re_password:
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'})
+        else:
+            if len(password) < 6:
+                return Response({'error': 'Password must be at least 6 characters'})
+            else:
+                serializer = UserSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    print(serializer.validated_data)
+                    return Response({'data': serializer.validated_data})
+                return Response({'error': 'failed to create user'})
+    else:
+        return Response({'error': 'Passwords do not match'})
+
 
 
 @api_view(['GET'])

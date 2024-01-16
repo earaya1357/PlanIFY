@@ -6,6 +6,7 @@ urlpatterns = [
     path('create-event', views.createevent, name='CreateEvent'),
     path('user-account', views.useraccount, name='UserAccount'),
     path('user', views.user, name='User'),
+    path('new-user', views.createnewuser, name='NewUser'),
     path('test', views.getmodeldetails, name='Test'),
     path('events-dashboard-host', views.vieweventshost, name='ViewEventsHost'),
     path('events-dashboard-host-edit', views.editeventshost, name='EditEventsHost'),
