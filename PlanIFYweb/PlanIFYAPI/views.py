@@ -14,12 +14,14 @@ UserAccount = apps.get_model('PlanIFYWOD', 'UserAccount')
 EventParticipant = apps.get_model('PlanIFYWOD', 'EventParticipant')
 
 @api_view(['POST'])
+@csrf_protect
 def createnewuser(request):
     data = request.data
 
     username = data['username']
     password = data['password']
     re_password = data['re_password']
+    email = data['email']
 
     if password == re_password:
         if User.objects.filter(username=username).exists():
@@ -28,14 +30,32 @@ def createnewuser(request):
             if len(password) < 6:
                 return Response({'error': 'Password must be at least 6 characters'})
             else:
-                serializer = UserSerializer(data=request.data)
-                if serializer.is_valid():
-                    serializer.save()
-                    print(serializer.validated_data)
-                    return Response({'data': serializer.validated_data})
-                return Response({'error': 'failed to create user'})
+                if User.objects.filter(email=email).exists():
+                    return Response({'error': 'This email is already in use'})
+                else:
+                    serializer = UserSerializer(data=request.data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        print(serializer.validated_data)
+                        return Response({'data': serializer.validated_data})
+                    return Response({'error': 'Failed to create user'})
     else:
         return Response({'error': 'Passwords do not match'})
+
+
+@api_view(['POST'])
+@csrf_protect
+def createuserprofile(request):
+    data = request.data
+    if UserAccount.objects.filter(username=data['username']).exists():
+        serializer = UserAccountSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data': serializer.validated_data})
+        else:
+            return Response({'error': 'Fields missing'})
+    else:
+        return Response({'error': 'Unable to find the user'})
 
 
 
@@ -47,12 +67,14 @@ def dashboarddata(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@csrf_protect
 def createevent(request):
     event = EventSerializer(data=request.data)
 
     return Response(event.data.keys())
 
 @api_view(['GET'])
+@csrf_protect
 def useraccount(request):
     param = request.query_params
     user = get_object_or_404(UserAccount, username=param['id'])
@@ -62,7 +84,9 @@ def useraccount(request):
 
     return Response({'user': serializer.data})
 
+
 @api_view(['GET'])
+@csrf_protect
 def user(request):
     param = request.query_params
     user = get_object_or_404(User, username=param['username'])
@@ -76,6 +100,7 @@ def user(request):
 
 #This is a test item for creating events
 @api_view(['GET'])
+@csrf_protect
 def getmodeldetails(request):
     event = Event.objects.all()
     serializer = EventSerializer(event, many=True)
@@ -85,6 +110,7 @@ def getmodeldetails(request):
 
 #Get events a host has created
 @api_view(['GET'])
+@csrf_protect
 def vieweventshost(request):
     params = request.query_params
     events = Event.objects.filter(event_host_user=params['event_host_user'])
@@ -95,6 +121,7 @@ def vieweventshost(request):
 
 #Get events an athlete has signed up for
 @api_view(['GET'])
+@csrf_protect
 def vieweventsathlete(request):
     params = request.query_params
 
@@ -112,6 +139,7 @@ def vieweventsathlete(request):
 
 #Get events a host has created
 @api_view(['GET'])
+@csrf_protect
 def editeventshost(request):
     params = request.query_params
     event = get_object_or_404(Event, event_id=params['event_id'])
