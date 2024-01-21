@@ -17,7 +17,6 @@ EventParticipant = apps.get_model('PlanIFYWOD', 'EventParticipant')
 @api_view(['POST'])
 def createnewuser(request):
     data = request.data
-    print(data)
 
     username = data['username']
     password = data['password']
